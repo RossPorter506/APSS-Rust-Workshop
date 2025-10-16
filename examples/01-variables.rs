@@ -31,7 +31,7 @@ static GLOBAL_VAR: u32 = 5;
 
 fn example() {
     GLOBAL_VAR += 1;
-    // Don't forget, variables are immutable by default! Let's try adding 'mut' to the definition of GLOBAL_VAR again...
+    // Don't forget, variables are immutable by default! Let's try adding 'mut' to the definition of GLOBAL_VAR...
 
     // Why didn't that work?! Global variables can't safely be made mutable because any sort of concurrency (e.g. multithreading, concurrency, interrupts) can cause race conditions!
     // Rust offers some tools to safely deal with global mutable variables (we will discuss later), but in general they should be *avoided at all costs*. 
