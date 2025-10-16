@@ -10,7 +10,8 @@ fn main() {
     // 	   [val; length] // array size must be a constant ^^^ 
     // }//        ^^^^^ array size must be a constant
 
-    // This doesn't work! Arrays are stored on the stack, as their size is known at compile time, but here the array size isn't constant. We could write several copies of the function:
+    // This doesn't work! Arrays are stored on the stack, as their size is known at compile time, but 
+    // here the array size isn't constant. We could write several copies of the function:
     fn return_arr1(val: i32) -> [i32; 1] {
         [val; 1]
     }

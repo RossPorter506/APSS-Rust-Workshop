@@ -3,7 +3,6 @@
 // Rust allows for object-oriented design, however it may be slightly different to 
 // what you're used to coming from C++ or similar.
 
-
 fn main() {
     // struct_methods();
     // enum_methods();

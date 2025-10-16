@@ -81,7 +81,8 @@ fn main() {
     } 
 
 
-    // Okay... but not being able to modify a value is pretty rough. What if we want to modify the value, but we promise only one variable will write to it (and no-one else will read it)?
+    // Okay... but not being able to modify a value is pretty rough. What if we want to modify the value, but we
+    // promise only one variable will write to it (and no-one else will read it)?
     // Rust also has syntax for this! We can *borrow mutably* using `&mut`.
     {
         let mut x = "Imagine a really long string again".to_string(); // x owns the mutable string

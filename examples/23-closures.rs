@@ -7,7 +7,8 @@ fn main() {
 
 fn anonymous_functions() {
     // Rust supports anonymous (or 'lambda') functions, and also a more powerful variant called a closure.
-    // Anonymous functions are particularly useful when a function wants to remain generic over its actions, and so takes another function as a parameter. 
+    // Anonymous functions are particularly useful when a function wants to remain generic over its actions, and so 
+    // takes another function as a parameter. 
     // For example, you may have some functions that check if some piece of data fulfils some requirement like:
 
     fn check_if_even(n: i32) -> bool {
@@ -22,7 +23,8 @@ fn anonymous_functions() {
         n.count_ones() == 1
     }
 
-    // Instead of writing all of these different functions, we might write a single function that accepts a number and a function as a parameter. 
+    // Instead of writing all of these different functions, we might write a single function that accepts a 
+    // number and a function as a parameter. 
     // The outer function then calls the inner function with the number as a parameter, and returns the result
     fn check(n:i32, f: fn(i32)->bool) -> bool {
         f(n)
@@ -45,12 +47,14 @@ fn anonymous_functions() {
 }
 
 fn closures() {
-    // Closures are anonymous functions that also use (or 'capture') variables from their environment, not just those passed in as parameters:
+    // Closures are anonymous functions that also use (or 'capture') variables from their environment, 
+    // not just those passed in as parameters:
 
     let val: usize = 10;
     let closure = |n: usize| n == val;
 
-    // Closures interact with the ownership and borrowing system. By default a closure will try and take the lowest level of ownership possible:
+    // Closures interact with the ownership and borrowing system. By default a closure will try and take the 
+    // lowest level of ownership possible:
     // An immutable borrow, then a mutable borrow if that's insufficient, and only taking ownership if necessary.
 
     // If you want a closure to take ownership of a value it otherwise wouldn't, you can use the 'move' keyword:

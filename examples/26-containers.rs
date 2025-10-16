@@ -22,14 +22,16 @@ fn boxx() {
     let boxed_int = Box::new(10_i32); // This is on the heap
 
     // A Box may be necessary for interacting with 'Dynamically Sized Types' (e.g. str, slices, trait objects). 
-    // Most of the time DSTs are passed around by reference or mutable reference, but if you need to actually own a DST then you can wrap it in a Box.
+    // Most of the time DSTs are passed around by reference or mutable reference, but if you need to 
+    // actually own a DST then you can wrap it in a Box.
 }
 
 fn ref_count() {
     // While avoiding garbage collection was one of the reasons Rust's borrowing rules were invented, runtime
     // reference counting is sometimes the easiest way to solve a problem. Rc is a reference counter - 
     // if you need multiple variables to 'own' some data then Rc can be used to provide an owned handle to your data.
-    // Of course, because there are multiple 'owners' the data is immutable. When the last Rc goes out of scope the data is cleaned up.
+    // Of course, because there are multiple 'owners' the data is immutable. When the last Rc goes out of scope 
+    // the data is cleaned up.
 
     // Arc is an atomic reference counter, usable for multi-threaded applications. 
     // This is useful if you have multiple threads that all need access to some (read-only) data. 
@@ -40,9 +42,10 @@ fn ref_count() {
 
 fn cell() {
     // Cell offers a partial escape hatch to the borrowing rules. It does not check borrowing rules at all, 
-    // but is only usable with types that implement Copy. It works by ensuring that you can't take references to their internals at all 
-    // (only copying out the value, or replacing the whole value), hence the compiler don't have to worry about multiple mutable references 
-    // existing at once, or a mutable and immutable reference to the underlying data existing at the same time, etc..
+    // but is only usable with types that implement Copy. It works by ensuring that you can't take references to 
+    // their internals at all (only copying out the value, or replacing the whole value), hence the compiler don't
+    // have to worry about multiple mutable references existing at once, or a mutable and immutable reference 
+    // to the underlying data existing at the same time, etc..
 
     // Cell has what is known as *interior mutability*, allowing modification even through an immutable reference.
 

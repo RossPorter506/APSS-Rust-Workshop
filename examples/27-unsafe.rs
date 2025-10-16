@@ -21,7 +21,8 @@
 // - Access or modify mutable static variables
 // - Access fields of C-style unions
 
-// Because unsafe Rust allows you to create, modify and dereference raw pointers, you can shoot yourself in the foot in a *truly staggering* number of ways. 
+// Because unsafe Rust allows you to create, modify and dereference raw pointers, you can shoot yourself in the foot 
+// in a *truly staggering* number of ways:
 // - *Using unsafe does not free you from the rules of the borrow checker.* 
 // - *Using unsafe Rust to create multiple mutable references is undefined behaviour.*
 // - *Using unsafe Rust to create simultaneous mutable and immutable references is undefined behaviour.* 

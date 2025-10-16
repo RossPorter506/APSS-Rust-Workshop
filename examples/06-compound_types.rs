@@ -1,5 +1,13 @@
 #![allow(unused_variables, unused_assignments, dead_code, clippy::no_effect)]
 
+fn main() {
+    // arrays();
+    // vectors();
+    // strings();
+    // slices();
+    // tuples();
+}
+
 fn arrays() {
     /* Arrays */
     let arr_of_i32: [i32; 10] = [0,1,2,3,4,5,6,7,8,9];
@@ -29,10 +37,12 @@ fn strings() {
     /* &str */
     // A string slice represents a non-growable collection of characters, similar to an array. You can think of it like a [char; N].
 
-    // Note the '&' in the type name - this is because we are always technically *borrowing* a string slice, since the actual data is baked into the executable's text section. 
-    // As a result is 'owned' by the executable itself rather than any variable, we merely get a handle to that actual memory location, hence a borrow. See Slices for more information.
+    // Note the '&' in the type name - this is because we are always technically *borrowing* a string slice, since the actual data is 
+    // baked into the executable's text section. As a result its 'owned' by the program itself rather than any variable, so 
+    // we merely get a handle to that actual memory location, hence a borrow. See Slices for more information.
     let fixed: &str = "hello";
-    // Because &str is really just a handle to a memory location, they don't have many operations defined on them. For instance, you can't add two &str together.
+    // Because &str is really just a handle to a memory location, they don't have many operations defined on them. 
+    // For instance, you can't add two &str together.
 
 
     /* String */
@@ -51,13 +61,15 @@ fn strings() {
     // Rust doesn't like to implicitly cast types without the user's knowledge.
     // Alternatively, it could silently make a new String and cast both s1 and s2 to &str and write them into the new String. 
     // This is less arbitrary than just picking one to extend, but requires twice as many implicit casts, plus an additional heap allocation!
-    // Both options aren't great and have potential downsides, so rather than picking one, the compiler leaves it up to the user to specify which they want, leaving this ambiguous case as a compile error.
+    // Both options aren't great and have potential downsides, so rather than picking one, the compiler leaves it up to the user to specify 
+    // which they want, leaving this ambiguous case as a compile error.
 
     // Instead, we make it clear whether s1 or s2 will be extended by converting the other into a &str:
     let s1 = String::from("Hello");
     let s2 = String::from(" world!");
     let s3 = s1 + s2.as_str(); 
-    // Note that s3 takes ownership of s1 here, so it will not be available afterwards. Remember, you can always call .clone() to produce a copy rather than moving s1 into s3:
+    // Note that s3 takes ownership of s1 here, so it will not be available afterwards. Remember, you can always call .clone() to produce 
+    // a copy rather than moving s1 into s3:
     // let s3 = s1.clone() + s2.as_str(); // s1 continues to be usable afterwards because the data was cloned (copied), instead of being moved out.
 
 
@@ -123,12 +135,4 @@ fn tuples() {
     x.1; // bool
 
     // Rust often uses the 'empty tuple' () as a placeholder for 'nothing'. For example, functions that return nothing actually return the empty tuple.
-}
-
-fn main() {
-    // arrays();
-    // vectors();
-    // strings();
-    // slices();
-    // tuples();
 }

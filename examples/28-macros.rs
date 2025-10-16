@@ -53,7 +53,8 @@ impl_backwards_add_for!(i32);
 
 
 // In this case we took a type ('ty'), but macros can also take expressions like 'a+b' as 'expr', 
-// statements like 'if' statements or 'let' statements as 'stmt', identifiers like the name of a variable as 'ident', literals like 10 or "Hello" as 'literal', etc.
+// statements like 'if' statements or 'let' statements as 'stmt', identifiers like the name of a variable as 
+// 'ident', literals like 10 or "Hello" as 'literal', etc.
 
 // Macros can have different bodies depending on the number and type of arguments passed:
 macro_rules! say_hello {
@@ -75,4 +76,5 @@ fn example2() {
 
 // Macros are variadic, which means they can potentially take an arbitrary number of arguments.
 
-// Macros are a very advanced topic and you can easily get lost in them, so we will leave them here for now. For more info see the Rust book chapter on macros
+// Macros are a very advanced topic and you can easily get lost in them, so we will leave them here 
+// for now. For more info see the Rust book chapter on macros

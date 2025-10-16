@@ -91,19 +91,22 @@ fn bools() {
     let a_greater_b = a > b;
     // etc.
 
-    // We also have the short-circuiting OR and short-circuiting AND from C, available as || and &&. These are equivalent to | and & respectively, except the second value is only evaluated as necessary. 
-    // That is, if a || expensive_fn() then expensive_fn() is only evaluated if a is false. As a result, these should generally be preferred over their single counterparts.
+    // We also have the short-circuiting OR and short-circuiting AND from C, available as || and &&. These are equivalent to 
+    // | and & respectively, except the second value is only evaluated as necessary. 
+    // That is, if a || expensive_fn() then expensive_fn() is only evaluated if a is false. As a result,
+    // these should generally be preferred over their single counterparts.
 
-    // It should be noted that the behaviour of ! depends on the type: For booleans it is logical negation, but for integer types it is a bitwise negation. 
-    // Because Rust does not perform implicit type coercion (discussed next) you do not need to worry about this distinction! A boolean has no concept of bitwise negation, and integers do not have a concept of logical negation.
+    // It should be noted that the behaviour of ! depends on the type: For booleans it is logical negation, but for integer 
+    // types it is a bitwise negation. Because Rust does not perform implicit type coercion (discussed next) you do not need to
+    // worry about this distinction! A boolean has no concept of bitwise negation, and integers do not have a concept of logical negation.
 }
 
 fn casting() {
     /* Type casting */
 
     // In Rust all type casts are explicit. Unlike C, Rust will not attempt to coerce any data types to make sense. 
-    // At first I found this annoying until I realised how it made every type cast visible, and as a result, clearly obvious where data loss could occur - 
-    // each one became a careful case to consider, rather than something the compiler does behind the scenes. 
+    // At first I found this annoying until I realised how it made every type cast visible, and as a result, clearly obvious where 
+    // data loss could occur - each one became a careful case to consider, rather than something the compiler does behind the scenes. 
 
     // For example in C the following compiles just fine, and it doesn't overflow on a 32-bit system, but
     // will silently overflow on a 16-bit system, despite using explicitly sized types everywhere:

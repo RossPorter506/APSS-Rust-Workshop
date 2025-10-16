@@ -1,7 +1,9 @@
 #![allow(dead_code, unused_variables, clippy::needless_return)]
 
 fn main() {
-    // A subset of Rust functionality can be used at compile time. For example, a function marked as a 'const fn' can be called wherever a constant value is expected. For example, array lengths must be known at compile time, so they must be constant values:
+    // A subset of Rust functionality can be used at compile time. For example, a function marked as a 
+    // 'const fn' can be called wherever a constant value is expected. For example, array lengths must 
+    // be known at compile time, so they must be constant values:
 
     let arr = [10; 10]; // Ok!
     const ARR_LEN: usize = 10;
@@ -14,7 +16,9 @@ fn main() {
     const fn const_add_one(n: usize) -> usize { n + 1 }
     let arr = [10; const_add_one(9)]; // Ok!
         
-    // To force an expression to be evaluated at compile-time use a const {} expression to make a constant scope. For example, let's say we want a function that only operates on types that are 4 bytes in size. We could use the assert! macro to panic at runtime if a non-4-byte type is used:
+    // To force an expression to be evaluated at compile-time use a const {} expression to make a constant
+    // scope. For example, let's say we want a function that only operates on types that are 4 bytes in size.
+    // We could use the assert! macro to panic at runtime if a non-4-byte type is used:
 
     // This function requires the generic type T to be 4 bytes in size
     // Using this function with a non-4-byte T will panic at runtime
@@ -23,7 +27,8 @@ fn main() {
         todo!()
     }
 
-    // But we don't want runtime panics! Instead, force the assertion to the computed at compile time by placing it inside a const scope:
+    // But we don't want runtime panics! Instead, force the assertion to the computed at compile time by 
+    // placing it inside a const scope:
 
     // This function requires the generic type T to be 4 bytes in size
     // If T is not 4 bytes this will cause a compile error.

@@ -77,7 +77,8 @@ fn rediscovering_option() {
         }
     }
 
-    // This is good, now the compiler is aware that whenever we call this function we must check if the result is valid before we can use the data:
+    // This is good, now the compiler is aware that whenever we call this function we must check if the 
+    // result is valid before we can use the data:
     let d = safe_divide4(10.0, 0.0);
     let a = d + 10.0; // Compile error! Mismatched types!
 
@@ -137,7 +138,9 @@ fn result() {
         Ok(val) => do_something_else(val),
     };
 
-    // Result also has a bunch of helper functions associated with it such as the map() function mentioned in the Option section, as well as conversion functions for translating between Option and Result, such as ok() and err() (Option also has conversion functions).
+    // Result also has a bunch of helper functions associated with it such as the map() 
+    // function mentioned in the Option section, as well as conversion functions for translating 
+    // between Option and Result, such as ok() and err() (Option also has conversion functions).
     struct ErrorType1;
     struct ErrorType2;
 

@@ -19,7 +19,8 @@ fn main() {
     // It also helps the compiler make optimisations. 
 
 
-    // If you know the value of a variable at compile time, you may instead want to create a 'constant'. This is the C equivalent of a #define, but with type safety.
+    // If you know the value of a variable at compile time, you may instead want to create a 'constant'. 
+    // This is the C equivalent of a #define, but with type safety.
     // During compilation, the value of a constant is evaluated and inlined into the code. Constants must have their type specified explicitly.
     // Constant names are in 'SCREAMING_SNAKE_CASE' by convention.
     const CONSTANT_1: i32 = 20;
@@ -33,7 +34,8 @@ fn example() {
     GLOBAL_VAR += 1;
     // Don't forget, variables are immutable by default! Let's try adding 'mut' to the definition of GLOBAL_VAR...
 
-    // Why didn't that work?! Global variables can't safely be made mutable because any sort of concurrency (e.g. multithreading, concurrency, interrupts) can cause race conditions!
-    // Rust offers some tools to safely deal with global mutable variables (we will discuss later), but in general they should be *avoided at all costs*. 
-    // Mutable variables are fine, global variables are fine, but not global mutable variables!
+    // Why didn't that work?! Global variables can't safely be made mutable because any sort of concurrency 
+    // (e.g. multithreading, concurrency, interrupts) can cause race conditions!
+    // Rust offers some tools to safely deal with global mutable variables (we will discuss later), but in general they should be 
+    // *avoided at all costs*. Mutable variables are fine, global variables are fine, but not global mutable variables!
 }

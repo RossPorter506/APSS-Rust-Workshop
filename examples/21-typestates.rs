@@ -7,7 +7,8 @@ fn main() {
 }
 
 fn naive() {
-    // Quite often structs have some internal state. For instance, let's write a mock File object, that opens a file from the filesystem and writes to it:
+    // Quite often structs have some internal state. For instance, let's write a mock File object that 
+    // opens a file from the filesystem and writes to it:
 
     struct File {
         filepath: String,
