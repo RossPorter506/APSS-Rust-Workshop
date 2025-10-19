@@ -8,7 +8,7 @@ fn main() {
     // enum_methods();
 }
 
-#[derive(Debug)] // This lets us debug print this struct using the ':?' syntax. More on this later.
+#[derive(Debug)] // This lets us debug print this struct using the ':?' syntax. More on this in the 'common traits' example.
 struct Point {
 	x: i32,
 	y: i32,

@@ -1,8 +1,9 @@
 #![allow(unused_variables, unused_assignments, dead_code, clippy::needless_return)]
 
+
 // As I'm sure you've guessed by this point, functions are declared using the 'fn' keyword followed by the name, 
 // parameter list, return type (if any) then the implementation inside curly brackets:
-fn example(int: i32) -> bool {
+fn example(val: i32) -> bool {
     return true;
 }
 
@@ -36,6 +37,8 @@ fn test() -> &[i32; 10] {
 }
 
 
+
+
 // Borrowing Parameters
 // Functions in Rust take ownership of all their parameters. 
 // Remember that some types in Rust (those that are just as cheap to copy as they are to move) will simply be copied rather than dealing with ownership rules. 
@@ -53,6 +56,7 @@ fn some_fn2(val: String) {
 
 
 
+
 // Of course we could make some_fn() return the value and then assign it back to x, but this is a bit... eugh...
 fn awkward() {
 	let mut x = "Hello!".to_string(); // ← x takes ownership of the array
@@ -63,6 +67,8 @@ fn some_fn3(val: String) -> String {
 	// ... // <-- val takes ownership of the value of the array
 	return val; // <-- val returns ownership of the array to the caller 
 } 
+
+
 
 
 
@@ -81,6 +87,8 @@ fn some_fn4(val: &String ) { // <-- Note it now expects a borrowed value
 
 
 
+
+
 // Likewise a function can also mutably borrow a value:
 
 fn mut_borrow() {
@@ -93,6 +101,8 @@ fn mut_borrow() {
 fn some_fn5(val: &mut String) { // <-- Note it now expects a mutable borrow
 	val.clear(); // <-- val mutates the value
 } // <-- we don't need to explicitly return the borrowed value, it's done for us
+
+
 
 
 

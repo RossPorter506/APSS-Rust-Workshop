@@ -56,7 +56,7 @@ fn structured_match() {
         false => 0,
     };
 
-    // If you have a case where you don't want to do anything, Rust requires placing the empty tuple after the big arrow:
+    // If you have a case where you don't want to do anything, Rust requires placing the empty tuple (or squiggly brackets) after the big arrow:
     let i = 10;
     match i {
         0..=9   => println!("single digit"),

@@ -214,3 +214,8 @@ fn into_from() {
     let p: Point = t.into();
     let p = Point::from(t);
 }
+
+// Not discussed here: Multithreading traits Send and Sync.
+// Rust provides strong guarantees around multithreaded access of data, and this is accomplished through Send and Sync
+// Send - a type is safe to send to a different thread.
+// Sync - a type provides some synchronisation mechanism to prevent race conditions between threads.

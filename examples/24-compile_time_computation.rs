@@ -6,6 +6,7 @@ fn main() {
     // be known at compile time, so they must be constant values:
 
     let arr = [10; 10]; // Ok!
+
     const ARR_LEN: usize = 10;
     let arr = [10; ARR_LEN]; // Ok!
 
@@ -22,20 +23,24 @@ fn main() {
 
     // This function requires the generic type T to be 4 bytes in size
     // Using this function with a non-4-byte T will panic at runtime
-    fn example_fn<T>(n: T) {
+    fn runtime_assert<T>(n: T) {
         assert!(std::mem::size_of::<T>() == 4);
         todo!()
     }
+
+    runtime_assert(10_u8);
 
     // But we don't want runtime panics! Instead, force the assertion to the computed at compile time by 
     // placing it inside a const scope:
 
     // This function requires the generic type T to be 4 bytes in size
     // If T is not 4 bytes this will cause a compile error.
-    fn example_fn2<T>(n: T) {
+    fn compiletime_assert<T>(n: T) {
         const { assert!(std::mem::size_of::<T>() == 4) }
         todo!()
     }
+
+    // compiletime_assert(10_u8);
 
     // Of course, not all things can be computed in a const context. Notable examples include:
     // - Non-terminating loops (or loops that can't be proven to terminate by the compiler),

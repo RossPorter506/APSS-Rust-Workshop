@@ -33,8 +33,8 @@ fn anonymous_functions() {
         n%2 == 0
     }
     check(10, is_even);
-
     // However you can see we still need to fully define the functions we pass into check, even if they're very simple one-liners.
+
     // Rust allows you to write anonymous functions (so called because they do not need to be named):
     check(10, |n| n % 2 == 0);
 
@@ -42,8 +42,7 @@ fn anonymous_functions() {
     // Note that because the compiler knows the function signature already it can usually infer the types of all the parameters. 
     // If the function is one expression it can be written immediately after the pipes. If the function is multiple expressions 
     // then the body should be encased in squiggly brackets:
-    check(10, |n| {let log2n = n.ilog2(); return log2n > 3});
-
+    check(10, |n: i32| {let log2n = n.ilog2(); return log2n > 3});
 }
 
 fn closures() {
@@ -58,14 +57,14 @@ fn closures() {
     // An immutable borrow, then a mutable borrow if that's insufficient, and only taking ownership if necessary.
 
     // If you want a closure to take ownership of a value it otherwise wouldn't, you can use the 'move' keyword:
-    // A non-Copy type to demonstrate moves. We will discuss Box in detail later.
-    let val: Box<i32> = Box::new(10); 
+    // A non-Copy type to demonstrate moves.
+    let val: String = "Hello".to_string(); 
 
     // Normally this closure only needs an immutable reference to val
     // But the move keyword forces the closure take ownership of val
-    let closure = move |n: i32| n == *val;
+    let closure = move |n: String| n == val;
 
-    if *val == 10 { // Compile error! Use of moved value
+    if val.ends_with('o') { // Compile error! Use of moved value
         println!("Still here!");
     }
 

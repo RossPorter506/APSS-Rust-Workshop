@@ -10,7 +10,7 @@ fn main() {
     let var = 50 / 2 + 10;
     println!("Value: {var}");
 
-    // Most primitive types can be printed automatically (because they implement `Display`, more on this later).
+    // Most primitive types can be printed automatically (because they implement `Display`, more on this in the 'common traits' example).
     // Most non-primitive types usually *can't* be printed in the standard manner. This lets you define this yourself, should you need or want to.
     // However, almost any type can be printed using the special 'Debug' display mode by placing ':?' inside the format string placeholder:
     let array = [1,2,3,4];

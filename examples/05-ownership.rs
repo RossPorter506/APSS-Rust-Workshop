@@ -18,10 +18,8 @@
 // - Data races (unsynchronized mutation across threads)
 
 fn main() {
-    // In Rust, each piece of data has *exactly* one owner at all times. When the owner goes out of scope, the data is cleaned up ('dropped').
-    // Why can't we have multiple owners? 
-    // Only the owner can write to a value, so multiple owners could lead to a data race! e.g. two threads trying to increment the same value.
-
+    // In Rust, each piece of data has *exactly* one owner at all times. 
+    // When the owner goes out of scope the compiler knows that the data can be safely cleaned up ('dropped').
 
     // Let's open up an arbitrary scope first to clearly delineate this example:
     {
@@ -42,7 +40,7 @@ fn main() {
 
     // ** If a type is inexpensive to construct, then Rust will automatically create a copy when we assign another variable to it. **
 
-    // How does the compiler know if a type is cheap to copy? This is handled through the `Copy` trait, which we will discuss later.
+    // How does the compiler know if a type is cheap to copy? This is handled through the `Copy` trait, which we will discuss later in the 'common traits' example.
     // Most primitive types are `Copy`.
 
     // What if a type *isn't* cheap to copy, though? Like a really long string? 
@@ -59,7 +57,7 @@ fn main() {
         //println!("{}", x); // Compile error! Use of moved value
     }
 
-    // If we are okay with taking a performance hit, we can ask the compiler to copy the item for us by calling .clone(). This copies the string.
+    // If we are okay with taking a performance hit, we can ask the compiler to duplicate the item for us by calling .clone(). This copies the string.
     // This is usually the easiest way to get around 'used after move' or 'borrowed after move' errors. 
     {
         // x owns the string
@@ -70,9 +68,11 @@ fn main() {
     }
 
 
-    // Why can't we have multiple owners? 
-    // Only the owner can write to a value, so multiple owners could lead to a data race! e.g. two threads trying to increment the same value
-    // Okay, well what if we just want to reference the value, but we promise not to modify it? Rust has syntax for this!
+    // Okay, but I really just want to have more than one variable pointing to the same thing, how can I do that?
+    // Rust will let you do this, but with one concession: While the data is shared it can't be modified.
+    // In Rust this is called borrowing, specifically we want a 'shared borrow' or a 'shared reference', which uses the '&' symbol.
+    // (Why do we make this concession? Well it's just good practise, but also it prevents a whole class of bugs - see iterator invalidation in C++).
+
     {
         let x = "Imagine a really long string again".to_string(); // x owns the string
         let y = &x; // y *borrows* the contents of x
@@ -81,9 +81,9 @@ fn main() {
     } 
 
 
-    // Okay... but not being able to modify a value is pretty rough. What if we want to modify the value, but we
-    // promise only one variable will write to it (and no-one else will read it)?
-    // Rust also has syntax for this! We can *borrow mutably* using `&mut`.
+    // Okay... but not being able to modify a value is pretty rough. Can we make the opposite concession:
+    // Allow modification, but guarantee that no-one else (not even the owner) will read or write to it?
+    // Yes! We can *borrow mutably* using `&mut`.
     {
         let mut x = "Imagine a really long string again".to_string(); // x owns the mutable string
         let y = &mut x; // y *mutably borrows* the string
@@ -91,6 +91,9 @@ fn main() {
         // println!("{}", &x); // Compile error! We can't borrow x again, because y still has it *mutably* borrowed!
         println!("{}", y);
     }
+
+    // Remember: The guarantee we made the compiler when asking for a *shared* reference was that it wouldn't be modified.
+    // If a mutable reference exists we can't uphold this contract, hence we can't have mutable and shared references at the same time!
 
     // To summarise:
     // At any point, every piece of data is either exclusively:

@@ -1,6 +1,9 @@
 #![allow(dead_code, unused_variables, unused_assignments, clippy::needless_return)]
 
 fn main() {
+    example1();
+    example2();
+    example3();
 }
 
 // Rust macros are similar to the C preprocessor (with the added bonus of type checking), 
@@ -52,9 +55,9 @@ impl_backwards_add_for!(i32);
 // etc.
 
 
-// In this case we took a type ('ty'), but macros can also take expressions like 'a+b' as 'expr', 
-// statements like 'if' statements or 'let' statements as 'stmt', identifiers like the name of a variable as 
-// 'ident', literals like 10 or "Hello" as 'literal', etc.
+// In this case we took a type ('ty'), but macros can also take expressions like 'a+b' using 'expr', 
+// statements like 'if' statements or 'let' statements using 'stmt', identifiers like the name of a variable using 
+// 'ident', literals like 10 or "Hello" using 'literal', etc.
 
 // Macros can have different bodies depending on the number and type of arguments passed:
 macro_rules! say_hello {
@@ -75,6 +78,22 @@ fn example2() {
 }
 
 // Macros are variadic, which means they can potentially take an arbitrary number of arguments.
+macro_rules! print_all {
+    ($($arg:expr),* $(,)?) => {
+        $(
+            println!("{:?}", $arg);
+        )*
+    };
+}
+fn example3() {
+    print_all!("Hi");
+    println!();
+
+    print_all!("Hi", 2);
+    println!();
+
+    print_all!("Hi", 2, [1,2,3]);
+}
 
 // Macros are a very advanced topic and you can easily get lost in them, so we will leave them here 
 // for now. For more info see the Rust book chapter on macros

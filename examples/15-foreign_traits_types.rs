@@ -19,7 +19,7 @@ impl Print for f64 {
 // If however we tried to implement the std library's ToString trait on the std library's f64 type, compile error!
 // impl std::string::ToString for f64 {/* ... */} // Compile error! Only traits defined in the current crate can be implemented on foreign types
 
-// There is a way to get around this, using a 'wrapper' type and the Deref and DerefMut traits. This will be discussed briefly later.
+// There is a way to get around this, using a 'wrapper' type and the Deref and DerefMut traits. They will be discussed briefly in the common traits example.
 
 fn main() {
 

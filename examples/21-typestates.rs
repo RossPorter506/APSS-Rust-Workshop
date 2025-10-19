@@ -46,16 +46,66 @@ fn naive() {
     f.close(); // Panic!
 
     // Notice that a lot of this code is error checking. In every function we have to be in the right state, 
-    // otherwise things go wrong. We saw in the previous example that generics can be used to add methods to
-    // particular subtypes of a struct. Could we use this to encode the state of an object into its type? Yes!
+    // otherwise things go wrong. 
 }
 
-fn typestates() {
+fn typestates1() {
+    struct FileOpen{
+        filepath: String
+    }
+    impl FileOpen {
+        fn write(&self, data: &str) {
+            /* Open file */
+        }
+        fn close(self) -> FileClosed {
+            /* Close file */
+            FileClosed{filepath: self.filepath}
+        }
+    }
+    struct FileClosed {
+        filepath: String
+    }
+    impl FileClosed {
+        fn new(filepath: String) -> FileClosed {
+            // Note: Compiler can infer the generic from return type
+            FileClosed{filepath}
+        }
+        fn open(self) -> FileOpen {
+            /* Open file */
+            FileOpen{filepath: self.filepath}
+        }
+    }
+
+    let file_closed = FileClosed::new("/var/lib/file.txt".to_string());
+    let file_open = file_closed.open();
+    //file_closed.open(); // Note: the open() method consumes FileClosed, so we can't wrongly access the old variable! This problem can't be fixed in most other languages!
+    // And even better, Rust supports 'variable shadowing' so we can actually just call them the same thing:
+    let file = file_open.close();
+    let file = file.open();
+    file.write("abcd");
+    let file = file.close();
+    file.write(); // Compile error! No write() method for FileClosed!
+
+    // And with that, we've just moved an entire class of runtime errors into compile-time errors!
+
+    // We saw in the generics example that generics can be used to add methods to
+    // particular subtypes of a struct. Could we use this to encode the state of an object into its subtype? Yes!
+}
+
+fn typestates2() {
+    // It would be nice to combine FileOpen and FileClosed into a single type, while keeping the typestate information. If we add a generic bound we can do this!
+
+    // We'll make some empty structs that represent state. Because they're empty they get completely compiled away.
+    struct Open;    
+    struct Closed;    
+
+    // This is a secret tool that will help us in a second
     use std::marker::PhantomData;
-    struct File<State>{ // We make our own FileState trait
+
+    struct File<S>{ // Our struct has a generic that will be either the 'Open' or 'Closed' types above.
         filepath: String,
-        // The compiler complains if we don't use our generic 
-        _state: PhantomData<State>, 
+        // The compiler complains if we don't use our generic. PhantomData tells the compiler we don't actually need it.
+        _state: PhantomData<S>, 
     }
     impl File<Closed> {
         fn new(filepath: String) -> File<Closed> {
@@ -68,7 +118,7 @@ fn typestates() {
         }
     }
     impl File<Open> {
-        fn write(&mut self, data: &str) {
+        fn write(&self, data: &str) {
             /* Open file */
         }
         fn close(self) -> File<Closed> {
@@ -76,8 +126,7 @@ fn typestates() {
             File{filepath: self.filepath, _state: PhantomData}
         }
     }
-    struct Open;    // And some empty structs...
-    struct Closed;           	 
+           	 
 
     // Now if we use this File object:
 
@@ -87,6 +136,4 @@ fn typestates() {
     f.write("abc");
     let f = f.close();
     let f = f.close(); // Compile error! File<Closed> has no 'close()'
-
-    // And with that, we've just moved an entire class of runtime errors into compile-time errors!
 }
