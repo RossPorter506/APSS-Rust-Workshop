@@ -1,4 +1,4 @@
-#![allow(dead_code)]
+#![allow(dead_code, unused_variables)]
 
 // Multi-file projects are organised like so:
 
@@ -15,9 +15,13 @@ fn main() {
     // We can construct Module2Struct because the fields aren't private
 	let two = Module2Struct{a:  10, b: String::from("Hello")};
 
-    // However this wouldn't work, because Module1Struct has private fields. 
-    // We would have to rely on calling functions from module1 that return a constructed Module1Struct for us
+    // However the following wouldn't work because Module1Struct has private fields. 
     // let b = Module1Struct{a: 10, b:"Hello".to_string(), c: true}; // Compile error! Private fields!
 
-	let _one: Module1Struct = module1::convert(two);
+    // Instead we can call the public constructor defined in module1.
+    let one = Module1Struct::new(10, "".to_string(), true);
+
+    // Of course, if something returns a Module1Struct we can use it, even if the struct is private.
+	let also_one: Module1Struct = crate::module1::convert(two);
+    // Because we didn't add a 'use' statement for the convert(), we have to fully specify the path.
 }
