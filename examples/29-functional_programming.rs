@@ -5,7 +5,8 @@
 // immutability, and functions as first-class objects often being used and composed to solve problems 
 // over lists of data. Functional programming is not a paradigm unique to Rust, but Rust plays quite well with it.
 
-// This is compared to imperative or procedural programming, which is often more about mutable state and declarative statements. 
+// This is compared to imperative or procedural programming, which is often more about mutable state and 
+// declarative statements. 
 // For example, the classic imperative approach to calculating the sum of an array might be as follows:
 fn imperative_sum() {
 	let arr = [1,2,3,4,5,6,7,8,9,10];
@@ -16,13 +17,14 @@ fn imperative_sum() {
 }
 
 
-// Such an implementation is perfectly serviceable, though if this program needed to be made multithreaded then some form of 
-// access guard must be placed on sum to ensure atomicity and prevent race conditions. 
+// Such an implementation is perfectly serviceable, though if this program needed to be made multithreaded then
+// some form of access guard must be placed on sum to ensure atomicity and prevent race conditions. 
 // It's also fairly wordy and requires four lines for a relatively simple operation.
 
-// A functional approach would instead notice if you remove all of the boilerplate, we are really only applying a function 
-// onto an array. Many such problems reduce to the same form, too. Functional programming is all about formalising what it means 
-// to apply a function to an array in various ways. A functional implementation of the above is shown below. By the end of this 
+// A functional approach would instead notice if you remove all of the boilerplate, we are really only applying a 
+// function onto an array. Many such problems reduce to the same form, too. Functional programming is all about 
+// formalising what it means to apply a function to an array in various ways. A functional implementation of the
+// above is shown below. By the end of this 
 // chapter you should understand what this is doing.
 // let arr = [1,2,3,4,5,6,7,8,9,10];
 // let sum = arr.into_iter().reduce(|sum, n| sum + n);
@@ -44,19 +46,21 @@ fn iterators() {
 	// because anything in Rust that can be used in a for loop must implement the Iterator trait, which is a structure that 
 	// produces Some(T) values until the underlying data structure runs out of values, then returns None.
 
-	// In a for loop the compiler can infer that you want an iterator and it is done implicitly, but here it must be done manually 
+	// In a for loop the compiler can infer that you want an iterator and it is done implicitly, but here it must be 
+	// done manually 
 	// if you want to use the following functions like map, filter, reduce, etc.
 	// As mentioned previously in the for loop section, there are three functions:
 	// .iter() always provides &T elements,
 	// .iter_mut() always provides &mut T elements,
 	// .into_iter() provides the same level of ownership as the container (e.g. Vec<T> → T, &Vec<T> → &T). 
 
-	// This is called implicitly if you simply write ‘for x in y’, and is typically the most performant, as if you own the container 
-	// then the compiler knows that this call will consume the collection and thus nothing can use it after, so 
-	// it may be able to reuse the allocation for the new values.
+	// This is called implicitly if you simply write ‘for x in y’, and is typically the most performant, 
+	// as if you own the container then the compiler knows that this call will consume the collection and thus 
+	// nothing can use it after, so it may be able to reuse the allocation for the new values.
 
-	// Once you have done whatever you need to do with the iterator, you probably want to convert it back into some collection, 
-	// a vector for instance. You do this with the .collect() method. Here's an example of the identity function:
+	// Once you have done whatever you need to do with the iterator, you probably want to convert it back into 
+	// some collection, a vector for instance. You do this with the .collect() method. 
+	// Here's an example of the identity function:
 
 	let mut vec = vec![1,2,3,4,5];
 	vec = vec.into_iter().collect();
@@ -74,26 +78,20 @@ fn map() {
 	let vec = vec![1,2,3,4,5];
 	let doubled = vec.into_iter().map(|x| 2*x);  // [2,4,6,8,10]
 
-	// Note that converting from a fixed-size collection to an iterator (a non-fixed size object) will lose you length information. 
-	// The compiler will not be happy if you try and collect an iterator into a fixed-length collection as this may fail. 
-	// If you know it won't fail (because you know what produced the iterator) it is still possible to collect into an array, 
-	// you will just have to jump through a hoop or two. 
-	let vec = vec![1,2,3,4,5];
-	let doubled: [i32; 5] = vec.into_iter()
-		.map(|x| 2*x)
-		.collect::<Vec<i32>>() // Collect into a vec
-		.try_into() // Attempt a possibly fallible conversion
-		.unwrap(); // Get the inner result. You know it won't fail, right?
-
+	// Note that converting from a fixed-size collection (e.g. array) to an iterator (a non-fixed size object) will 
+	// lose you length information. The compiler will not be happy if you try and then collect that iterator into 
+	// a fixed-length collection, as this may fail. 
 	// Instead, arrays directly implement map to avoid the issue altogether:
 	let arr = [1,2,3,4,5];
 	let doubled = arr.map(|x| 2*x);  // [2,4,6,8,10]
 
-	// If the operation is fallible, consider .and_then() instead, where each element is returned as an Option<U> instead of just U.
+	// If the operation is fallible, consider .and_then() instead, where each element is returned 
+	// as an Option<U> instead of just U.
 }
 
 fn filter() {
-	// Sometimes we may only be interested in certain values inside a collection. For example, suppose we want everything larger than 3:
+	// Sometimes we may only be interested in certain values inside a collection. 
+	// For example, suppose we want everything larger than 3:
 	let vec = vec![1,2,3,4,5];
 	let gt3: Vec<_> = vec.into_iter().filter(|&x| x > 3).collect(); // [4,5]
 

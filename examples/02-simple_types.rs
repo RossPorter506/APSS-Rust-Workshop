@@ -35,7 +35,8 @@ fn integers() {
     // Underscores are ignored, so we can use them as thousands separators, etc.
     let x = 10_000;
 
-    // (Alternatively, integer literals can be typed directly by appending the type name. This is the C equivalent of doing something like '10UL'.)
+    // (Alternatively, integer literals can be typed directly by appending the type name. 
+    // This is the C equivalent of doing something like '10UL'.)
     let x = 10_u64;
 
     // Integers are base 10 by default, but numbers can be expressed in different bases such as binary, octal, hexadecimal:
@@ -130,7 +131,8 @@ fn casting() {
 
     // Casting using Into and From
     // More complex types can't use the 'as' keyword, but they can use  into() and from() methods. 
-    // Most types in Rust have .into() and .from() methods that can be used to convert between types, if they implement `From` (discussed in the 'common traits' example). 
+    // Most types in Rust have .into() and .from() methods that can be used to convert between types, if they implement 
+    // `From` (discussed in the 'common traits' example). 
     // The into() method is defined on the type you have, whereas the from() method is defined on the type you want. 
     // This makes into() easier to reach for, but also potentially ambiguous, in which case you may want to use from():
 

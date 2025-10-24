@@ -13,10 +13,12 @@ fn main() {
 
 
 fn clone() {
-    // Types that could feasibly create a duplicate of itself should implement Clone. The operation may or may not be expensive.
+    // Types that could feasibly create a duplicate of itself should implement Clone. 
+    // The operation may or may not be expensive.
 
     // An example of a type that should be Clone: An array (whose elements are also Clone)
-    // An example of a type that should not be Clone: A type that represents some limited physical resource, like a file handle or a microcontroller pin.
+    // An example of a type that should not be Clone: A type that represents some limited physical 
+    // resource, like a file handle, database connection, or a microcontroller pin.
 
     #[derive(Clone)] 
     struct Point {x: i32, y: i32}
@@ -60,7 +62,8 @@ fn debug_display() {
     let a = Point {x:2, y:5};
     println!("{a:?}");
 
-    // Display is similar, but designed for explicitly non-debug printing. Display is not automatically derivable. An implementation may look like:
+    // Display is similar, but designed for explicitly non-debug printing. 
+    // Display is not automatically derivable. An implementation may look like:
     use std::fmt::{Display, Formatter, Error};
     impl Display for Point {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), Error> {
@@ -73,8 +76,10 @@ fn debug_display() {
 }
 
 fn default() {
-    // The Default trait allows an object to be constructed with default values. This can be automatically derived if all fields implement Default. 
-    // The default value for numerical types is zero, false for booleans, the empty string for textual types, NUL for char, etc.
+    // The Default trait allows an object to be constructed with default values. This can be automatically 
+    // derived if all fields implement Default. 
+    // The default value for numerical types is zero, false for booleans, the empty string for textual 
+    // types, NUL for char, etc.
 
     #[derive(Debug, Default)] // Automatically derive Default
     struct Point {
@@ -95,8 +100,10 @@ fn default() {
 
 fn deref() {
     // Deref and DerefMut
-    // In some cases it may make sense for a type to be invisibly coerced to another type. If this is the case, then consider implementing Deref and DerefMut.
-    // Implementing Deref<Target=U> for some type T allows 'dereferencing' using the * operator to get a U, but also allows the compiler to coerce &T to &U automatically,
+    // In some cases it may make sense for a type to be invisibly coerced to another type. 
+    // If this is the case, then consider implementing Deref and DerefMut.
+    // Implementing Deref<Target=U> for some type T allows 'dereferencing' using the * operator to get a U, 
+    // but also allows the compiler to coerce &T to &U automatically,
     // and allows you to call all immutable methods of U on T:
 
     struct Wrapper{i: i32}
@@ -113,16 +120,19 @@ fn deref() {
 
     // DerefMut is much the same, but is related to mutable references rather than immutable ones. 
     // Implementing DerefMut<Target=U> on some type T allows 'dereferencing' using the * operator to get the inner value, 
-    // but also allows the compiler to coerce &mut T to &mut U automatically, and allows you to call all mutable methods of U on T.
+    // but also allows the compiler to coerce &mut T to &mut U automatically, and allows you to call all 
+    // mutable methods of U on T.
 
     // Deref and DerefMut should be used sparingly, and only when you want some type to behave identically to another. 
-    // Because all the methods of the inner value are made available, the wrapper cannot maintain any encapsulation or maintain any extra invariants on the inner data.
+    // Because all the methods of the inner value are made available, the wrapper cannot maintain any encapsulation 
+    // or maintain any extra invariants on the inner data.
 }
 
 fn eq() {
     // PartialEq and Eq
     // Implementing PartialEq allows comparison between elements of a type using '=='
-    // The PartialEq trait should be defined on types where equality is well-behaved enough to be a partial equivalence relation. That is: 
+    // The PartialEq trait should be defined on types where equality is well-behaved enough to be a partial 
+    // equivalence relation. That is: 
     // If a == b then b == a 
     // If a == b and b == c then a == c.
     // PartialEq can be automatically derived if all fields implement PartialEq
@@ -136,7 +146,8 @@ fn eq() {
         println!("x is not equal to y");
     }
 
-    // Eq represents a full equivalence relation, which adds the additional restriction that each element must be equal to itself. In other words:
+    // Eq represents a full equivalence relation, which adds the additional restriction that each element 
+    // must be equal to itself. In other words:
     // If a == b then b == a 
     // If a == b and b == c then a == c.
     // a == a for all elements a
@@ -145,7 +156,8 @@ fn eq() {
     // Eq does not add any additional functionality, but can be used to mark functions or algorithms that require types 
     // with a full equivalence relation to work properly (e.g. sorting).
 
-    // The distinction between PartialEq and Eq may seem redundant, but floating point types can only implement PartialEq, since NaN is not equal to itself.
+    // The distinction between PartialEq and Eq may seem redundant, but floating point types can only implement 
+    // PartialEq, since NaN is not equal to itself.
 
     #[derive(PartialEq, Eq)]
     struct Wrapper2{val: bool}
@@ -195,7 +207,8 @@ fn into_from() {
     let y = i64::from(x); // Type supplied by user
 
     // The Rust compiler has a blanket implementation of Into for any type that implements From, so 
-    // users should implement From to get the equivalent Into implementation for free. For this reason we will only look at From here.
+    // users should implement From to get the equivalent Into implementation for free. 
+    // For this reason we will only look at From here.
 
     // From takes one generic argument T, which represents the type being cast from. 
     // The trait is implemented on the type being cast to. For example, below we implement From<(i32, i32)> on Point, 

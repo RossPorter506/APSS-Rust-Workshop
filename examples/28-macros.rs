@@ -34,7 +34,8 @@ impl BackwardsAdd for u64 {
 	    b+a
     }
 }
-// Note: In this particular case we could have used a default trait implementation, but we used a macro here just as an example.
+// Note: In this particular case we could have used a default trait implementation, 
+// but we used a macro here just as an example.
 
 
 // In this case the implementation code is going to be almost identical whether it's 

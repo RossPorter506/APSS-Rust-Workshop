@@ -8,7 +8,8 @@ fn main() {
 }
 
 // Rust does not support inheritance in the standard way to avoid the complexity and fragility it introduces. 
-// Inheritance on objects tightly couples types and can cause issues with shared mutable state, implicit behavior, and deep class hierarchies. 
+// Inheritance on objects tightly couples types and can cause issues with shared mutable state, 
+// implicit behavior, and deep class hierarchies. 
 // Rust instead favours composition (structs containing other types) and traits (interfaces defining shared behavior). 
 // This gives code reuse and polymorphism without hidden relationships, making programs safer, clearer, and easier to maintain.
 
@@ -72,7 +73,7 @@ trait WideMultiply {
 
     //                            vvvv - This is the type of whatever implements the trait
     fn wide_multiply(self, other: Self) -> Self::Wide;
-    //                                    ^^^^^^^^^^ - This refers to the associated type specified above
+    //                                     ^^^^^^^^^^ - This refers to the associated type specified above
 }
 
 impl WideMultiply for i16 {

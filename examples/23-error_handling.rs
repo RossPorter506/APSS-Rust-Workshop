@@ -11,7 +11,8 @@
 // an error five functions deep and throws an exception that is caught three functions up suddenly the program might be in
 // an invalid state, with some functions only half-applied.
 
-// Instead in Rust errors are encoded *into the type system* using wrapper types. The most common of these are Option and Result
+// Instead in Rust errors are encoded *into the type system* using wrapper types. 
+// The most common of these are Option and Result
 
 fn main() {
     //reinventing_option();
@@ -197,7 +198,8 @@ fn result2() {
     fn access_local_file(s: String)  -> Result<String, LocalFilesystemErr> { todo!() }
     fn access_remote_file(s: String) -> Result<String, RemoteFilesystemErr> { todo!() }
 
-    // Even though these functions return different error types, Rust will automatically convert the error as needed using our above method
+    // Even though these functions return different error types, Rust will automatically convert the 
+    // error as needed using our above method
     let filename = "D:/remote_file_location.txt".to_string();
     let i = access_local_file(filename).map(access_remote_file);
 }
@@ -245,7 +247,8 @@ fn question_mark_operator() -> Result<i32, String> {
         Err(b) => return Err(b), // return error to the caller
     };
 
-    // Because ? returns an Option or Result in the failure case (depending on whether the function it’s used on returns an Option or Result), 
+    // Because ? returns an Option or Result in the failure case (depending on whether the function 
+    // it’s used on returns an Option or Result), 
     // it can only be used in functions that also return an Option or Result, respectively. 
     
     // If the function you call returns an Option but your function returns a Result (or vice versa)

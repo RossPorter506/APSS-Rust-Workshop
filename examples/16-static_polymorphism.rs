@@ -4,7 +4,8 @@
 // This is Rust's version of 'polymorphism'.
 
 // Polymorphism comes in two types: Static and dynamic polymorphism. 
-// Static polymorphism has the compiler at compile time creating a copy of the function for each type it's called with ('monomorphisation'). 
+// Static polymorphism has the compiler at compile time creating a copy of the function for each type it's 
+// called with ('monomorphisation'). 
 // This increases code size, but has no runtime overhead.
 
 // Dynamic polymorphism instead uses pointers and function tables to use the same function with all different typed objects. 

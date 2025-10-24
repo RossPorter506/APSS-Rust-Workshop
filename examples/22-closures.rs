@@ -33,15 +33,17 @@ fn anonymous_functions() {
         n%2 == 0
     }
     check(10, is_even);
-    // However you can see we still need to fully define the functions we pass into check, even if they're very simple one-liners.
+    // However you can see we still need to fully define the functions we pass into check, even if they're very 
+    // simple one-liners.
 
     // Rust allows you to write anonymous functions (so called because they do not need to be named):
     check(10, |n| n % 2 == 0);
 
     // The anonymous function begins with two pipe characters || with the names of parameters in between them. 
-    // Note that because the compiler knows the function signature already it can usually infer the types of all the parameters. 
-    // If the function is one expression it can be written immediately after the pipes. If the function is multiple expressions 
-    // then the body should be encased in squiggly brackets:
+    // Note that because the compiler knows the function signature already it can usually infer the types of all 
+    // the parameters. 
+    // If the function is one expression it can be written immediately after the pipes. If the function is multiple 
+    // expressions then the body should be encased in squiggly brackets:
     check(10, |n: i32| {let log2n = n.ilog2(); return log2n > 3});
 }
 
@@ -68,7 +70,8 @@ fn closures() {
         println!("Still here!");
     }
 
-    // Because closures capture information from their environment, their type signatures are actually unique and can't be expressed normally.
+    // Because closures capture information from their environment, their type signatures are actually unique 
+    // and can't be expressed normally.
     // Luckily, Rust will implement traits on closures so we can still reference them:
 
     // FnOnce: Implemented on all closures that can be called at least once (i.e. all closures). 
@@ -80,6 +83,7 @@ fn closures() {
     // Closures that implement FnMut also implement FnOnce.
 
     // Fn: Implemented for closures that don't move captured values, nor mutate them. 
-    // This is the most restrictive trait. Because they don't move any captured values they can be called an unlimited number of times. 
+    // This is the most restrictive trait. Because they don't move any captured values they can be called 
+    // an unlimited number of times. 
     // Closures that implement Fn also implement FnMut and FnOnce.
 }

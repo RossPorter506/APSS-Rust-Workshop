@@ -10,23 +10,23 @@ fn main() {
     
     // Now, let's get onto something actually interesting.
     let x = 10;
-    x = 20;
+    // x = 20;
     // What?! A compile error?!
     // Variables are immutable by default in Rust, so they can't be modified after being defined...
     // Unless we specify that it should be mutable when we declare it by adding 'mut' after the 'let' keyword. Try it now.
 
-    // Making variables immutable by default makes it easier for readers to see at a glance whether a variable can change value during execution. 
-    // It also helps the compiler make optimisations. 
-
+    // Making variables immutable by default makes it easier for readers to see at a glance whether a variable can change 
+    // value during execution. It also helps the compiler make optimisations. 
 
     // If you know the value of a variable at compile time, you may instead want to create a 'constant'. 
     // This is the C equivalent of a #define, but with type safety.
-    // During compilation, the value of a constant is evaluated and inlined into the code. Constants must have their type specified explicitly.
-    // Constant names are in 'SCREAMING_SNAKE_CASE' by convention.
+    // During compilation, the value of a constant is evaluated and inlined into the code. Constants must have their type
+    // specified explicitly. Constant names are in 'SCREAMING_SNAKE_CASE' by convention.
     const CONSTANT_1: i32 = 20;
 }
 
-// Global variables are defined using the 'static' keyword (because they will live at the same memory address for the life of the whole program).
+// Global variables are defined using the 'static' keyword (because they will live at the same memory address for the 
+// life of the whole program).
 // Like constants, they are in 'SCREAMING_SNAKE_CASE' and must have their type defined explicitly.
 static GLOBAL_VAR: u32 = 5;
 

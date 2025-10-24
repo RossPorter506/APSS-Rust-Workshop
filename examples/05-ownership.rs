@@ -7,8 +7,9 @@
 // - Trust you to manually manage memory (C, C++) which is fast but error-prone, or
 // - Use a garbage collector (Java, Python), which is safe but adds runtime cost and time unpredictability.
 
-// Rust does neither. It enforces correctness at compile time. The compiler tracks which variable "owns" a value, who can borrow it, and for how long. 
-// That’s the price: A bit more thinking up front. The reward: Memory safety and concurrency safety with zero runtime overhead.
+// Rust does neither. It enforces correctness at compile time. The compiler tracks which variable "owns" a value, 
+// who can borrow it, and for how long. That’s the price: A bit more thinking up front. The reward: Memory safety 
+// and concurrency safety with zero runtime overhead.
 // As a bonus, it can also be used to model systems that are unrepresentable in other languages! More on this in later examples...
 
 // Rust’s ownership and borrowing rules exist to eliminate an entire class of memory bugs without needing a garbage collector:
@@ -40,7 +41,8 @@ fn main() {
 
     // ** If a type is inexpensive to construct, then Rust will automatically create a copy when we assign another variable to it. **
 
-    // How does the compiler know if a type is cheap to copy? This is handled through the `Copy` trait, which we will discuss later in the 'common traits' example.
+    // How does the compiler know if a type is cheap to copy? This is handled through the `Copy` trait, which we will discuss later in
+    // the 'common traits' example.
     // Most primitive types are `Copy`.
 
     // What if a type *isn't* cheap to copy, though? Like a really long string? 
@@ -57,8 +59,8 @@ fn main() {
         //println!("{}", x); // Compile error! Use of moved value
     }
 
-    // If we are okay with taking a performance hit, we can ask the compiler to duplicate the item for us by calling .clone(). This copies the string.
-    // This is usually the easiest way to get around 'used after move' or 'borrowed after move' errors. 
+    // If we are okay with taking a performance hit, we can ask the compiler to duplicate the item for us by calling .clone(). 
+    // This duplicates the string. This is usually the easiest way to get around 'used after move' or 'borrowed after move' errors. 
     {
         // x owns the string
         let x = "This is a really long string, it really takes up a lot of memory. You wouldn't want the compiler to be silently copying all of this, it would be really bad for performance. I mean really, it just keeps going, and going and going. You'd think it would have stopped by now but it just keeps going on and on and on forever".to_string(); 
@@ -71,7 +73,8 @@ fn main() {
     // Okay, but I really just want to have more than one variable pointing to the same thing, how can I do that?
     // Rust will let you do this, but with one concession: While the data is shared it can't be modified.
     // In Rust this is called borrowing, specifically we want a 'shared borrow' or a 'shared reference', which uses the '&' symbol.
-    // (Why do we make this concession? Well it's just good practise, but also it prevents a whole class of bugs - see iterator invalidation in C++).
+    // (Why do we make this concession? Well it's just good practise, but also it prevents a whole class of bugs - see 
+    // iterator invalidation in C++).
 
     {
         let x = "Imagine a really long string again".to_string(); // x owns the string

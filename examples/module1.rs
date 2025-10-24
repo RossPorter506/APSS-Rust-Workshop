@@ -1,7 +1,7 @@
 use crate::module2::Module2Struct;
 
-// Create a struct that can be created outside of this file, but 
-// the internal fields are private and can't be read. 
+// Create a public struct (can be created outside of this file), but 
+// the internal fields are private and can't be read.
 pub struct Module1Struct {
 	a: i32,
 	b: String,

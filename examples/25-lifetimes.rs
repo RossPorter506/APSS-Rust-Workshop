@@ -18,7 +18,8 @@ fn lifetimes() {
     println!("{borrow}"); // Compile error! 'y' does not live long enough. Comment out this line and watch the error disappear.
 
     // In the above example we can see that we try to store a reference to y in borrow. 
-    // But because y goes out of scope before borrow does, there is a period of time where borrow would refer to deallocated memory. 
+    // But because y goes out of scope before borrow does, there is a period of time where borrow 
+    // would refer to deallocated memory. 
     // This would break the memory safety guarantee of Rust, so it becomes a compile error. 
     // We say that the lifetime of 'borrow' outlives the lifetime of 'y'. 
 
@@ -40,7 +41,8 @@ fn lifetimes() {
     // The only way to return a reference is to take a reference against one of the function's inputs, so the output 
     // lifetime must be the same as one of the input's lifetimes. Since example() takes ownership of in1 it will be 
     // dropped at the end of the function call, so trying to return a reference to in1 is nonsensical. This leaves in2. 
-    // Because there is only one input that is a reference the compiler can automatically infer that the output reference lives as long as in2 does.
+    // Because there is only one input that is a reference the compiler can automatically infer that 
+    // the output reference lives as long as in2 does.
 
     // Lifetime errors only occur with functions when returning a reference. 
     // If the function takes only one reference as an input the lifetimes can be automatically elided for you.
@@ -74,7 +76,8 @@ fn lifetimes() {
     // This is easier to reason about, but limits what can be passed into the function. The previous 
     // code example would produce a compile error, as the lifetime of a and b are different.
 
-    // But what if the function is more complex, and returns a reference to either in2 or in3 based on the execution of the code?
+    // But what if the function is more complex, and returns a reference to either in2 or in3 based on 
+    // the execution of the code?
 
     // fn example6<'a,'b>(first: bool, in2: &'a i32, in3: &'b i32) -> &'?' i32 {
     //     if first {                       // what lifetime goes here? ^
@@ -85,7 +88,8 @@ fn lifetimes() {
     // }
 
     // This is more difficult, as the lifetime of the output isn’t always 'a or 'b. 
-    // To solve this, first note that for any two lifetimes a and b, either a and b are equal, or one completely contains the other:
+    // To solve this, first note that for any two lifetimes a and b, either a and b are equal, or one 
+    // completely contains the other:
     fn example7() {
         let a = 10; // <-- a begins here 
         {
@@ -95,7 +99,8 @@ fn lifetimes() {
 
     // Suppose, like the code example above, that 'a outlives 'b (or in other words, 'a lives at least as long as 'b). 
     // In all cases the lifetime of the output lives at least as long as 'b. To tell the compiler that 'a outlives 'b 
-    // (aka 'a lives at least as long as 'b) we write 'a:'b. The colon can be read as ‘outlives’ (or more accurately ‘lives at least as long as’).
+    // (aka 'a lives at least as long as 'b) we write 'a:'b. The colon can be read as ‘outlives’ 
+    // (or more accurately ‘lives at least as long as’).
 
     //      vvvvv 'a lives at least as long as 'b
     fn test<'a:'b,'b>(first: bool, in2: &'a i32, in3: &'b i32) -> &'b i32 {
@@ -133,12 +138,14 @@ fn the_static_lifetime() {
         &GLOBAL_T
     }
 
-    // Static references are exceedingly useful, as static references are always guaranteed to exist at any point in the program, 
-    // effectively removing most lifetime issues. Of course, static lifetimes are difficult to construct. Static variables are typically 
-    // immutable and must be able to be constructed at compile time. In this case that means T::new() must be a const function.
+    // Static references are exceedingly useful, as static references are always guaranteed to exist at any point
+    // in the program, effectively removing most lifetime issues. Of course, static lifetimes are difficult to 
+    // construct. Static variables are typically immutable and must be able to be constructed at compile time. 
+    // In this case that means T::new() must be a const function.
 
-    // You might be tempted to say that any variable defined in main() has a static lifetime after it’s declared, right? Not so fast! 
-    // Multithreaded programs can have one thread with a reference to some other thread’s data, but if the thread with the 
-    // data panics or ends then the data goes too.
-    // Alternatively, if a program panics then memory is cleaned up, which can cause variables in main to be deallocated before the program ends.
+    // You might be tempted to say that any variable defined in main() has a static lifetime after it’s declared, right? 
+    // Not so fast! Multithreaded programs can have one thread with a reference to some other thread’s data, 
+    // but if the thread with the data panics or ends then the data goes too.
+    // Alternatively, if a program panics then memory is cleaned up, which can cause variables in main 
+    // to be deallocated before the program ends.
 }

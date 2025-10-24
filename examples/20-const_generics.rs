@@ -1,7 +1,5 @@
 #![allow(dead_code, unused_variables)]
 
-
-
 fn main() {
     // Regular generics are generic over types. A const generic has a fixed type, but varies over values. 
     // For example, suppose we want to write a function that returns a particular size of array:

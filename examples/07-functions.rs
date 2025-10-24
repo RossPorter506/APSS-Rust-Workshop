@@ -37,7 +37,8 @@ fn outer() {
 } // <-- x goes out of scope here, and the string is dropped
 
 
-// You cannot return a reference to a local variable however, because the local variable will go out of scope at the end of the function:
+// You cannot return a reference to a local variable however, because the local variable will go out of scope 
+// at the end of the function:
 fn test() -> &[i32; 10] {
     //       ^^ Compile error! The compiler knows you can't possibly return a borrowed value with nothing to borrow from!
 	let x = [0; 10]; 
@@ -49,8 +50,10 @@ fn test() -> &[i32; 10] {
 
 // Borrowing Parameters
 // Functions in Rust take ownership of all their parameters. 
-// Remember that some types in Rust (those that are just as cheap to copy as they are to move) will simply be copied rather than dealing with ownership rules. 
-// These cheap types are said to implement `Copy`. If a type is not `Copy` (like String), then the following ownership and borrowing rules apply:
+// Remember that some types in Rust (those that are just as cheap to copy as they are to move) will simply be copied
+// rather than dealing with ownership rules. 
+// These cheap types are said to implement `Copy`. If a type is not `Copy` (like String), then the following ownership 
+// and borrowing rules apply:
 
 fn uh_oh() {
 	let x = "Hello!".to_string(); // <-- x takes ownership of the string data
@@ -91,9 +94,11 @@ fn some_fn3(val: String) -> String {
 
 
 
-// Luckily we can just let some_fn() borrow the data, rather than taking ownership of it. As a reminder, we do this using the & operator. 
+// Luckily we can just let some_fn() borrow the data, rather than taking ownership of it. 
+// (As a reminder, we do this using the & operator.) 
 // Borrowing is a compiler-enforced contract between the caller and callee:
-// The caller allows temporary access to some data, and the callee promises that the data will still be available (unmodified!) at the end of the function:
+// The caller allows temporary access to some data, and the callee promises that the data 
+// will still be available (unmodified!) at the end of the function:
  
 fn borrow() {
 	let x = "Hello!".to_string(); // <-- x takes ownership of the string

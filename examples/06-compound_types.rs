@@ -51,18 +51,19 @@ fn strings() {
     let s = String::from("Hello");
     println!("{}", s+" world!"); 	// Prints "Hello world!" 
 
-    // Note that since a String owns its underlying data, that makes adding two Strings tricky with regards to ownership. Who owns the resulting string?
+    // Note that since a String owns its underlying data, that makes adding two Strings tricky with regards to 
+    // ownership. Who owns the resulting string?
     let s1 = String::from("Hello");
     let s2 = String::from(" world!");
     // let s3 = s1 + s2; 	// Compile error! Where is s1 + s2 stored?
 
-    // s1+s2 needs to be stored somewhere on the heap. The compiler could choose one of s1 or s2 to extend and copy the other into it, but which? 
-    // It's an arbitrary choice, and also requires the compiler to silently implicitly cast one of the Strings to a &str and hope that's what the user wanted. 
-    // Rust doesn't like to implicitly cast types without the user's knowledge.
+    // s1+s2 needs to be stored somewhere. The compiler could choose one of s1 or s2 to extend and copy the other into it, but which? 
+    // It's an arbitrary choice, and also requires the compiler to silently implicitly cast one of the Strings to a &str and hope 
+    // that's what the user wanted. Rust doesn't like to implicitly cast types without the user's knowledge.
     // Alternatively, it could silently make a new String and cast both s1 and s2 to &str and write them into the new String. 
-    // This is less arbitrary than just picking one to extend, but requires twice as many implicit casts, plus an additional heap allocation!
-    // Both options aren't great and have potential downsides, so rather than picking one, the compiler leaves it up to the user to specify 
-    // which they want, leaving this ambiguous case as a compile error.
+    // This is less arbitrary than just picking one to extend, but requires twice as many implicit casts, plus an additional heap 
+    // allocation! Both options aren't great and have potential downsides, so rather than picking one, the compiler leaves 
+    // it up to the user to specify which they want, leaving this ambiguous case as a compile error.
 
     // Instead, we make it clear whether s1 or s2 will be extended by converting the other into a &str:
     let s1 = String::from("Hello");
@@ -70,7 +71,8 @@ fn strings() {
     let s3 = s1 + s2.as_str(); 
     // Note that s3 takes ownership of s1 here, so it will not be available afterwards. Remember, you can always call .clone() to produce 
     // a copy rather than moving s1 into s3:
-    // let s3 = s1.clone() + s2.as_str(); // s1 continues to be usable afterwards because the data was cloned (copied), instead of being moved out.
+    // let s3 = s1.clone() + s2.as_str(); // s1 continues to be usable afterwards because the data was cloned (copied), instead of
+    // being moved out.
 
 
     /* ASCII Text */
@@ -134,5 +136,6 @@ fn tuples() {
     x.0; // i32
     x.1; // bool
 
-    // Rust often uses the 'empty tuple' () as a placeholder for 'nothing'. For example, functions that return nothing actually return the empty tuple.
+    // Rust often uses the 'empty tuple' () as a placeholder for 'nothing'. For example, functions that return nothing 
+    // actually return the empty tuple.
 }

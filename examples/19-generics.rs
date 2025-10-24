@@ -1,8 +1,5 @@
 #![allow(dead_code, unused_variables)]
 
-
-
-
 fn main() {
     // Rust supports the concept of generic types, similar to C++'s template system. 
     // For example, suppose we want to write a function that adds two values:

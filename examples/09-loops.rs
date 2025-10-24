@@ -44,8 +44,10 @@ fn ownership_and_iterators() {
     let vec = vec![1,2,3,4];
 
     // When iterating over some collection, the items in it have the same 'ownership level' as the collection:
-    // Iterating over Vec<T> produces elements of T. Iterating over &mut Vec<T> produces &mut T elements. Iterating over &Vec<T> produces &T elements.
-    // Note that in the case of iterating over owned values (e.g. Vec<T>) ownership is transferred from the collection into the iterated elements.
+    // Iterating over Vec<T> produces elements of T. Iterating over &mut Vec<T> produces &mut T elements. 
+    // Iterating over &Vec<T> produces &T elements.
+    // Note that in the case of iterating over owned values (e.g. Vec<T>) ownership is transferred from 
+    // the collection into the iterated elements.
     for item in vec { // 'item' is an i32, it has been moved out of vec.
         println!("{item}");
     }

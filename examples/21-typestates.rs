@@ -11,13 +11,13 @@ fn naive() {
     // Quite often structs have some internal state. For instance, let's write a mock File object that 
     // opens a file from the filesystem and writes to it:
 
-    struct File {
+    struct FileWriter {
         filepath: String,
         is_open: bool,
     }
-    impl File {
-        fn new(filepath: String) -> File {
-                File {filepath, is_open: false}
+    impl FileWriter {
+        fn new(filepath: String) -> FileWriter {
+                FileWriter {filepath, is_open: false}
         }
         fn open(&mut self) {
             if self.is_open {
@@ -40,7 +40,7 @@ fn naive() {
             self.is_open = false;
         }
     }
-    let mut f: File = File::new("abc123.txt".to_string());
+    let mut f: FileWriter = FileWriter::new("abc123.txt".to_string());
     f.open();
     f.write("abc");
     f.close();
@@ -51,35 +51,36 @@ fn naive() {
 }
 
 fn typestates1() {
-    struct FileOpen{
+    struct FileWriterOpen{
         filepath: String
     }
-    impl FileOpen {
+    impl FileWriterOpen {
         fn write(&self, data: &str) {
             /* Open file */
         }
-        fn close(self) -> FileClosed {
+        fn close(self) -> FileWriterClosed {
             /* Close file */
-            FileClosed{filepath: self.filepath}
+            FileWriterClosed{filepath: self.filepath}
         }
     }
-    struct FileClosed {
+    struct FileWriterClosed {
         filepath: String
     }
-    impl FileClosed {
-        fn new(filepath: String) -> FileClosed {
+    impl FileWriterClosed {
+        fn new(filepath: String) -> FileWriterClosed {
             // Note: Compiler can infer the generic from return type
-            FileClosed{filepath}
+            FileWriterClosed{filepath}
         }
-        fn open(self) -> FileOpen {
+        fn open(self) -> FileWriterOpen {
             /* Open file */
-            FileOpen{filepath: self.filepath}
+            FileWriterOpen{filepath: self.filepath}
         }
     }
 
-    let file_closed = FileClosed::new("/var/lib/file.txt".to_string());
+    let file_closed = FileWriterClosed::new("/var/lib/file.txt".to_string());
     let file_open = file_closed.open();
-    //file_closed.open(); // Note: the open() method consumes FileClosed, so we can't wrongly access the old variable! This problem can't be fixed in most other languages!
+    //file_closed.open(); // Note: the open() method consumes FileClosed, so we can't wrongly access the old variable! 
+    // This problem can't be fixed in most other languages!
     // And even better, Rust supports 'variable shadowing' so we can actually just call them the same thing:
     let file = file_open.close();
     let file = file.open();
@@ -94,7 +95,8 @@ fn typestates1() {
 }
 
 fn typestates2() {
-    // It would be nice to combine FileOpen and FileClosed into a single type, while keeping the typestate information. If we add a generic bound we can do this!
+    // It would be nice to combine FileOpen and FileClosed into a single type, while keeping the typestate information. 
+    // If we add a generic bound we can do this!
 
     // We'll make some empty structs that represent state. Because they're empty they get completely compiled away.
     struct Open;
@@ -103,35 +105,34 @@ fn typestates2() {
     // This is a secret tool that will help us in a second
     use std::marker::PhantomData;
 
-    struct File<S>{ // Our struct has a generic that will be either the 'Open' or 'Closed' types above.
+    struct FileWriter<S>{ // Our struct has a generic that will be either the 'Open' or 'Closed' types above.
         filepath: String,
         // The compiler complains if we don't use our generic. PhantomData makes the compiler think we're using it.
         _state: PhantomData<S>, 
     }
-    impl File<Closed> {
-        fn new(filepath: String) -> File<Closed> {
+    impl FileWriter<Closed> {
+        fn new(filepath: String) -> FileWriter<Closed> {
             // Note: Compiler can infer the generic from return type
-            File{filepath, _state: PhantomData}
+            FileWriter{filepath, _state: PhantomData}
         }
-        fn open(self) -> File<Open> {
+        fn open(self) -> FileWriter<Open> {
             /* Open file */
-            File{filepath: self.filepath, _state: PhantomData}
+            FileWriter{filepath: self.filepath, _state: PhantomData}
         }
     }
-    impl File<Open> {
+    impl FileWriter<Open> {
         fn write(&self, data: &str) {
             /* Open file */
         }
-        fn close(self) -> File<Closed> {
+        fn close(self) -> FileWriter<Closed> {
             /* Close file */
-            File{filepath: self.filepath, _state: PhantomData}
+            FileWriter{filepath: self.filepath, _state: PhantomData}
         }
     }
            	 
-
     // Now if we use this File object:
 
-    let f = File::new("abc123.txt".to_string());
+    let f = FileWriter::new("abc123.txt".to_string());
     let f = f.write(); // Compile error! File<Closed> has no 'write()'
     let f = f.open();
     f.write("abc");

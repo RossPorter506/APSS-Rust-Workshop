@@ -4,7 +4,8 @@
 // For example, a Rust program is proven to never dereference a null pointer because of the borrowing rules. 
 
 // The Rust compiler only produces memory-safe programs. If your code compiles, then the compiler was able to prove 
-// that your program is memory-safe. There are, however, memory-safe programs that the Rust compiler can't prove are memory-safe. 
+// that your program is memory-safe. There are, however, memory-safe programs that the Rust compiler can't 
+// prove are memory-safe. 
 // For example, Rust programs that call foreign functions. Rust has interoperability with C, but C is not memory safe, so 
 // since C functions can access out of bounds memory that would make Rust non-memory safe too!
 // To solve this dilemma Rust introduces the unsafe keyword. Rust features that are potentially memory-unsafe are 
@@ -31,7 +32,8 @@
 
 // An example of an operation that is inherently unsafe is inserting a node in a doubly linked list. 
 // There is always a step in which at least one of the two pointers is dangling. Rust references can never dangle, so 
-// at some point you must drop down to working with raw pointers during the insertion operation, and working with raw pointers requires unsafe.
+// at some point you must drop down to working with raw pointers during the insertion operation, 
+// and working with raw pointers requires unsafe.
 
 // Functions or traits may be marked as unsafe which requires they be called from inside an unsafe block:
 

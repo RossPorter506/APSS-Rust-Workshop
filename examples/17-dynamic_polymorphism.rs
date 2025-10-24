@@ -9,7 +9,8 @@
 // The receiver has no idea about the underlying type besides the functions it can call on it 
 // (i.e. those defined in the trait). This pointer to object and vtable is called a 'trait object'. 
 // We use the `dyn` keyword to talk about a trait object. Because a trait object is a reference to something else 
-// you can never own a trait object (e.g. have a `dyn T`), you can only borrow an existing object (e.g. a `&dyn T`, or `&mut dyn T`)
+// you can never own a trait object (e.g. have a `dyn T`), you can only borrow an existing object 
+// (e.g. a `&dyn T`, or `&mut dyn T`)
 
 struct Point {
     x: i32,
@@ -30,5 +31,6 @@ fn main() {
 
     // Dynamic polymorphism is slower than static polymorphism because it requires following a pointer 
     // to interact with an object, but on the other hand does not require the compiler to duplicate function 
-    // implementations, nor does the compiler need to be able to determine the types being passed into the function at compile-time.
+    // implementations, nor does the compiler need to be able to determine the types being passed into the function 
+    // at compile-time.
 }

@@ -70,10 +70,11 @@ fn ref_count() {
     }
 
     let d = Node::new("D", vec![]);
-    let d_refcount: Rc<Node> = Rc::new(d); // Note that since our Node doesn't implement Copy, passing 'd' to new() consumes it.
+    let d_refcount: Rc<Node> = Rc::new(d); 
+    // Note that since our Node doesn't implement Copy, passing 'd' to new() consumes it.
     //println!("{}", d.name); // Compile error! Use of moved value!
     
-    let c = Node::new("C", vec![d_refcount.clone()]); // Rc implements Clone. Rc is really just a pointer to data, so this is always cheap.
+    let c = Node::new("C", vec![d_refcount.clone()]); // Rc implements Clone. Rc is just a pointer, so cloning is cheap.
     let b = Node::new("B", vec![d_refcount]);
     
     let a = Node::new("A", vec![Rc::new(b), Rc::new(c)]);
@@ -87,28 +88,33 @@ fn ref_count() {
 }
 
 fn ref_cell_mutex() {
-    // The compiler usually checks the borrowing rules at compile time, but RefCell allows the checks to be done at runtime instead. 
-    // This is useful if you *know* that you aren't violating the rules using some information the compiler doesn't have.
-    // If the borrowing rules are violated (e.g. two mutable references at once), then RefCell will panic. 
+    // The compiler usually checks the borrowing rules at compile time, but RefCell allows the checks to 
+    // be done at runtime instead. 
+    // This is useful if you *know* that you aren't violating the rules using some information the compiler 
+    // doesn't have. If the borrowing rules *are* violated (e.g. two mutable references at once), then RefCell will panic. 
     let ref_cell = RefCell::new(String::new());
     
     // Two mutable references at once! This compiles, but will panic at runtime.
     let mut_borrow_1 = ref_cell.borrow_mut();
     let mut_borrow_2 = ref_cell.borrow_mut();
 
-    // Mutex is similar to RefCell but is designed for a multithreaded environment - where RefCell would panic on a mutable reference already 
-    // existing, Mutex offers methods to poll or block until unique mutable access to the underlying data is obtained.
+    // Mutex is similar to RefCell but is designed for a multithreaded environment - where RefCell would panic 
+    // on a mutable reference already existing, Mutex offers methods to poll or block until unique mutable 
+    // access to the underlying data is obtained.
 
-    // A common use for RefCell is in embedded systems where we might want to have mutable access to some object in the main program and also in an interrupt handler.
-    // Provided the object is properly synchronised (disabling interrupts while it's being used in the main program), we know that multiple mutable references to the
+    // A common use for RefCell is in embedded systems where we might want to have mutable access to some 
+    // object in the main program and also in an interrupt handler. Provided the object is properly synchronised
+    // (disabling interrupts while it's being used in the main program), we know that multiple mutable references to the
     // object will never co-exist, but the compiler can't prove this! This situation is exactly what RefCell is for. 
 
-    // RefCell and Mutex have what is known as *interior mutability* - their internals can be modified even through an immutable reference.
+    // RefCell and Mutex have what is known as *interior mutability* - their internals can be modified even 
+    // through an immutable reference.
 }
 
 
 fn cell() {
-    // Cell is a simpler form of RefCell. It prevents taking references to the inner data, only allowing copying values in or out. The inner type must therefore implement Copy.
+    // Cell is a simpler form of RefCell. It prevents taking references to the inner data, only allowing 
+    // copying values in or out. The inner type must therefore implement Copy.
     // Because it prevents all borrowing it doesn't need to check any borrow checking rules at runtime.
     // Cell is useful for allowing mutability with only a shared reference.
 
@@ -127,8 +133,8 @@ fn cell() {
     b.replace(20);
 
     // Note that Cell doesn't solve synchronisation issues between threads, so isn't safe for multithreaded accessing.
-    // Multithreaded safety is defined by the two traits Send and Sync. Because multithreaded programming is a whole other topic, we 
-    // won't discuss it here.
+    // Multithreaded safety is defined by the two traits Send and Sync. 
+    // Because multithreaded programming is a whole other topic, we won't discuss it here.
 }
 
 // More container types:

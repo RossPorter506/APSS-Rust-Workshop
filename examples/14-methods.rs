@@ -25,7 +25,8 @@ fn methods() {
     //              ^^^^ - A value of type Self, '100' in this case.
     // So the above function takes a value of type i32, and the return type is an i32.
 
-    // Since most methods take an instance of the parent type it gets a bit boring constantly having to spell out the type name all the time.
+    // Since most methods take an instance of the parent type it gets a bit boring constantly having to spell 
+    // out the type name all the time.
     // Instead, Rust provides some shorthand through the 'dot' syntax (you might be familiar with from other languages):
     let also_ten = 100_i32.isqrt();
     println!("{also_ten}");
