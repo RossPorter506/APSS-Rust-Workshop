@@ -4,7 +4,8 @@
 // This is Rust's version of 'polymorphism'.
 
 // Polymorphism comes in two types: Static and dynamic polymorphism. 
-// Static polymorphism creates a copy of a function for each type it's called with ('monomorphisation'). This increases code size, but has no runtime overhead.
+// Static polymorphism has the compiler at compile time creating a copy of the function for each type it's called with ('monomorphisation'). 
+// This increases code size, but has no runtime overhead.
 
 // Dynamic polymorphism instead uses pointers and function tables to use the same function with all different typed objects. 
 // It has a runtime performance cost because you have to follow pointers to call each method, etc.. 
@@ -15,7 +16,6 @@ struct Point {
     x: i32,
     y: i32,
 }
-// Note: In reality we would just implement Display instead
 impl ToString for Point {
     fn to_string(&self) -> String {
         format!("({}, {})", self.x, self.y)
@@ -26,6 +26,8 @@ impl ToString for Point {
 // If we need to add additional requirements we can add other traits via: impl ToString + Clone + ...
 fn print_something(thing: impl ToString) {
 	println!("{}", thing.to_string());
+    // Sidenote: If all you wanted to do is print a type without needing the debug ':?' thing, 
+    // you would just implement Display rather than implementing ToString and doing this.
 }
 
 fn main() {

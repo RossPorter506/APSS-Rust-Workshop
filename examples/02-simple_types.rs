@@ -130,7 +130,7 @@ fn casting() {
 
     // Casting using Into and From
     // More complex types can't use the 'as' keyword, but they can use  into() and from() methods. 
-    // Most types in Rust have .into() and .from() methods that can be used to convert between types, if they implement `From` (more on this later). 
+    // Most types in Rust have .into() and .from() methods that can be used to convert between types, if they implement `From` (discussed in the 'common traits' example). 
     // The into() method is defined on the type you have, whereas the from() method is defined on the type you want. 
     // This makes into() easier to reach for, but also potentially ambiguous, in which case you may want to use from():
 

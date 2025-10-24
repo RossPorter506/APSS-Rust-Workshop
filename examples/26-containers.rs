@@ -73,7 +73,7 @@ fn ref_count() {
     let d_refcount: Rc<Node> = Rc::new(d); // Note that since our Node doesn't implement Copy, passing 'd' to new() consumes it.
     //println!("{}", d.name); // Compile error! Use of moved value!
     
-    let c = Node::new("C", vec![d_refcount.clone()]);
+    let c = Node::new("C", vec![d_refcount.clone()]); // Rc implements Clone. Rc is really just a pointer to data, so this is always cheap.
     let b = Node::new("B", vec![d_refcount]);
     
     let a = Node::new("A", vec![Rc::new(b), Rc::new(c)]);
@@ -97,7 +97,7 @@ fn ref_cell_mutex() {
     let mut_borrow_2 = ref_cell.borrow_mut();
 
     // Mutex is similar to RefCell but is designed for a multithreaded environment - where RefCell would panic on a mutable reference already 
-    // existing, a Mutex offers methods to poll or block until unique mutable access to the underlying data is obtained.
+    // existing, Mutex offers methods to poll or block until unique mutable access to the underlying data is obtained.
 
     // A common use for RefCell is in embedded systems where we might want to have mutable access to some object in the main program and also in an interrupt handler.
     // Provided the object is properly synchronised (disabling interrupts while it's being used in the main program), we know that multiple mutable references to the

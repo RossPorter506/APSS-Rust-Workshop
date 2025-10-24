@@ -251,6 +251,7 @@ fn question_mark_operator() -> Result<i32, String> {
     // If the function you call returns an Option but your function returns a Result (or vice versa)
     // you will have to convert the Option to a Result before using ?, such as with a function like .ok_or().
 
+    // This function needs to return a Result
     Ok(10)
 }
 

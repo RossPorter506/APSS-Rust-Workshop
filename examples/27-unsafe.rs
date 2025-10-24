@@ -4,7 +4,7 @@
 // For example, a Rust program is proven to never dereference a null pointer because of the borrowing rules. 
 
 // The Rust compiler only produces memory-safe programs. If your code compiles, then the compiler was able to prove 
-// that your program is memory safe. There are, however, memory-safe programs that the Rust compiler can't prove are memory safe. 
+// that your program is memory-safe. There are, however, memory-safe programs that the Rust compiler can't prove are memory-safe. 
 // For example, Rust programs that call foreign functions. Rust has interoperability with C, but C is not memory safe, so 
 // since C functions can access out of bounds memory that would make Rust non-memory safe too!
 // To solve this dilemma Rust introduces the unsafe keyword. Rust features that are potentially memory-unsafe are 
@@ -40,28 +40,28 @@ fn main() {
     /// # Safety
     /// This fn *will* shoot you in the foot if you call this with n > 20.
     /// For example reasons this fn can't check that n > 20 itself, so you have to do it.
-    unsafe fn test(n: i32) {
+    unsafe fn thingamatizer(n: i32) {
         if n > 20 {
             println!("Deleting system32...");
         }
         /* ... */
     }
 
-    fn test2(n: i32) {
+    fn safe_thingamatizer(n: i32) {
         if n <= 20 {
             // test(n); // Err! Unsafe function called outside unsafe block!
-            unsafe{ test(n) } // Ok!
+            unsafe{ thingamatizer(n) } // Ok!
         }
         else {
             println!("Avoided catastrophic damage!")
         }
     }
 
-    fn test3(n:i32) {
-        test2(n) // Ok!
+    fn outer(n:i32) {
+        safe_thingamatizer(n) // Ok!
     }
 
-    // Note that test2() can be called from outside an unsafe block even though it calls an unsafe function. 
+    // Note that safe_thingamatizer() can be called from outside an unsafe block even though it calls an unsafe function. 
     // Providing safe abstractions over unsafe code is a core pattern in Rust, so for example even though 
     // implementing a doubly linked list may require unsafe, it's the programmer's job to verify what the compiler can't. 
     // Once the programmer is confident the code is safe, they can implement an interface that is not marked with 'unsafe', 

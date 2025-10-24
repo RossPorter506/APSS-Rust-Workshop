@@ -28,8 +28,8 @@ fn main() {
         x: T,
         y: T,
     }
-    let p_float = Point::<f32>{x: 1.0,  y: 0.0};
-    let p_int   = Point::<i64>{x: 1234, y: 7654};
+    let p_float = Point::<f32>{x: 1.0, y: 0.0};
+    let p_int   = Point::<i64>{x: 123, y: 456};
 
     // impl blocks may also be applied to specific instances of Point. This allows some subtypes of Point 
     // to access special functions depending on the type:

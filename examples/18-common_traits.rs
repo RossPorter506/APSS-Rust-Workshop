@@ -32,7 +32,7 @@ fn copy() {
     // Copy requires Clone
 
     // An example of a type that should be Copy: A simple Enum
-    // An example of a type that should not be Copy: A large array of values
+    // An example of a type that should not be Copy: A vector of elements (could be very large!)
 
     #[derive(Debug, Copy, Clone)] 
     enum MaybeBool {
@@ -74,7 +74,7 @@ fn debug_display() {
 
 fn default() {
     // The Default trait allows an object to be constructed with default values. This can be automatically derived if all fields implement Default. 
-    // The default value for numerical types is zero, false for booleans, the empty string for textual types, null for char, etc.
+    // The default value for numerical types is zero, false for booleans, the empty string for textual types, NUL for char, etc.
 
     #[derive(Debug, Default)] // Automatically derive Default
     struct Point {
@@ -96,7 +96,7 @@ fn default() {
 fn deref() {
     // Deref and DerefMut
     // In some cases it may make sense for a type to be invisibly coerced to another type. If this is the case, then consider implementing Deref and DerefMut.
-    // Implementing Deref<Target=U> for some type T allows 'dereferencing' using the * operator, but also allows the compiler to coerce &T to &U automatically,
+    // Implementing Deref<Target=U> for some type T allows 'dereferencing' using the * operator to get a U, but also allows the compiler to coerce &T to &U automatically,
     // and allows you to call all immutable methods of U on T:
 
     struct Wrapper{i: i32}

@@ -7,7 +7,7 @@
 
 // In Rust this happens by providing a pointer to an object and the object's 'vtable' (list of function pointers). 
 // The receiver has no idea about the underlying type besides the functions it can call on it 
-// (i.e. those in the trait bound). This pointer to object and vtable is called a 'trait object'. 
+// (i.e. those defined in the trait). This pointer to object and vtable is called a 'trait object'. 
 // We use the `dyn` keyword to talk about a trait object. Because a trait object is a reference to something else 
 // you can never own a trait object (e.g. have a `dyn T`), you can only borrow an existing object (e.g. a `&dyn T`, or `&mut dyn T`)
 

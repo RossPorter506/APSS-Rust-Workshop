@@ -3,7 +3,8 @@
 
 fn main() {
     // naive();
-    // typestates();
+    // typestates1();
+    // typestates2();
 }
 
 fn naive() {
@@ -26,7 +27,7 @@ fn naive() {
             self.is_open = true;
         }
         fn write(&mut self, data: &str) {
-            if !self.is_open{
+            if !self.is_open {
                 panic!("Tried to write to closed file!");
             }
             /* write to file */
@@ -96,15 +97,15 @@ fn typestates2() {
     // It would be nice to combine FileOpen and FileClosed into a single type, while keeping the typestate information. If we add a generic bound we can do this!
 
     // We'll make some empty structs that represent state. Because they're empty they get completely compiled away.
-    struct Open;    
-    struct Closed;    
+    struct Open;
+    struct Closed;
 
     // This is a secret tool that will help us in a second
     use std::marker::PhantomData;
 
     struct File<S>{ // Our struct has a generic that will be either the 'Open' or 'Closed' types above.
         filepath: String,
-        // The compiler complains if we don't use our generic. PhantomData tells the compiler we don't actually need it.
+        // The compiler complains if we don't use our generic. PhantomData makes the compiler think we're using it.
         _state: PhantomData<S>, 
     }
     impl File<Closed> {

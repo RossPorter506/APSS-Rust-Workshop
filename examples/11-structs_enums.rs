@@ -14,8 +14,17 @@ fn struct_example() {
     }
 
     let p = Point {x: 10, y: 20};
-    p.x; // Access x field
-    p.y; // Access y field
+
+    println!("{}, {}", p.x, p.y); // Access x and y fields
+    
+    // Reminder: If your type implements 'Debug' you can print it directly using the ':?' syntax:
+    #[derive(Debug)] // This line automatically implements Debug for us. We'll talk about what this actually means later.
+    struct Point2 {
+        x: i32,
+        y: i32,
+    }
+    let p2 = Point2 {x: 10, y: 30};
+    println!("{:?}", p2);
 }
 
 fn simple_enum() {
@@ -72,10 +81,10 @@ fn tagged_enum() {
 
 
 
-fn give_change() {}
-fn check_card_number() {}
-fn verify_authenticity() {}
+fn give_change() { println!("Giving change...") }
+fn check_card_number() { println!("Checking card number...") }
+fn verify_authenticity() { println!("Verifying signature...") }
 
-fn give_change2(change: u32) {}
-fn check_card_number2(num: u32) {}
-fn verify_authenticity2(sig: String) {}
+fn give_change2(change: u32) { println!("Giving change for {change}") }
+fn check_card_number2(num: u32) { println!("Checking card number: {num}") }
+fn verify_authenticity2(sig: String) { println!("Verifying signature: {sig}") }

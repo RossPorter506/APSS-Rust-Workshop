@@ -17,8 +17,8 @@ fn main() {
     const fn const_add_one(n: usize) -> usize { n + 1 }
     let arr = [10; const_add_one(9)]; // Ok!
         
-    // To force an expression to be evaluated at compile-time use a const {} expression to make a constant
-    // scope. For example, let's say we want a function that only operates on types that are 4 bytes in size.
+    // To force an expression to be evaluated at compile-time use a `const {}` block. 
+    // For example, let's say we want a function that only operates on types that are 4 bytes in size.
     // We could use the assert! macro to panic at runtime if a non-4-byte type is used:
 
     // This function requires the generic type T to be 4 bytes in size

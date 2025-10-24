@@ -6,18 +6,18 @@ fn main() {
 }
 
 
-fn if_statements() -> i32 {
+fn if_statements() {
     // Rust supports typical if statements. Brackets are not required around the condition:
     let x = true;
     let y = 40;
     if x {
-        return 10;
+        println!("x is true");
     }
     else if y > 10 {
-        return 20;
+        println!("y is > 10");
     } 
     else {
-        return 0;
+        println!("something else");
     }
 }
 
@@ -26,9 +26,14 @@ fn inline_ifs() -> i32 {
     // In place of the rather cryptic ternary statement from C, Rust supports full inline if statements:
     let y = 40;
     let x = if y > 20 { 0 } else { 10 };
-    example_function(30, if x > 2 {55} else {0});
+    println!("x is {x}");
+
+    example_function(if x > 2 {55} else {0});
+    
     return if y > 50 {0} else {10}
 }
 
 
-fn example_function(a: i32, b: i32) {}
+fn example_function(a: i32) {
+    println!("{a}");
+}

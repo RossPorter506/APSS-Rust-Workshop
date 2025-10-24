@@ -3,7 +3,7 @@
 
 fn main() {
     lifetimes();
-    the_static_lifetime()
+    the_static_lifetime();
 }
 
 fn lifetimes() {
@@ -17,8 +17,8 @@ fn lifetimes() {
     }  // <-- 'y' dropped here while still borrowed
     println!("{borrow}"); // Compile error! 'y' does not live long enough. Comment out this line and watch the error disappear.
 
-    // In the above example we can see that we try to store a reference to y in ref. 
-    // But because y goes out of scope before ref does, there is a period of time where ref would refer to deallocated memory. 
+    // In the above example we can see that we try to store a reference to y in borrow. 
+    // But because y goes out of scope before borrow does, there is a period of time where borrow would refer to deallocated memory. 
     // This would break the memory safety guarantee of Rust, so it becomes a compile error. 
     // We say that the lifetime of 'borrow' outlives the lifetime of 'y'. 
 
@@ -40,16 +40,16 @@ fn lifetimes() {
     // The only way to return a reference is to take a reference against one of the function's inputs, so the output 
     // lifetime must be the same as one of the input's lifetimes. Since example() takes ownership of in1 it will be 
     // dropped at the end of the function call, so trying to return a reference to in1 is nonsensical. This leaves in2. 
-    // Because there is only one input that is a reference the compiler can automatically infer that the output reference lives as long as the input.
+    // Because there is only one input that is a reference the compiler can automatically infer that the output reference lives as long as in2 does.
 
     // Lifetime errors only occur with functions when returning a reference. 
     // If the function takes only one reference as an input the lifetimes can be automatically elided for you.
 
     // Let's consider a case where the compiler can't automatically infer the lifetimes.
     
-    fn example3(in2: &i32, in3: &i32) -> &i32 { 
+    fn example3(in1: &i32, in2: &i32) -> &i32 { 
         todo!()
-    } // Compile error! Is the output valid for in2's lifetime, or in3's?
+    } // Compile error! Is the output valid for in1's lifetime, or in2's?
 
     // The compiler can't automatically figure out what the lifetime of the output will be. For example:
     let a: i32 = 0;
@@ -60,16 +60,16 @@ fn lifetimes() {
     }
     println!("{c}"); // Is c still referring to allocated memory here?
 
-    // Suppose that example2()'s implementation actually has the output dependent on the value of the first 
+    // Suppose that example3()'s implementation actually has the output dependent on the value of the first 
     // borrowed value, not the second, so that the above example should compile. In this case we can tell the compiler 
     // that by defining two lifetimes and setting the output as the lifetime of the first value:
-    fn example4<'a, 'b>(in1: i32, in2: &'a i32, in3: &'b i32) -> &'a i32 {
-        in2 // example implementation
+    fn example4<'a, 'b>(in1: &'a i32, in2: &'b i32) -> &'a i32 {
+        in1 // example implementation
     }
 
     // Another possible solution might be to force the two inputs to have the same lifetime:
-    fn example5<'a>(in1: i32, in2: &'a i32, in3: &'a i32) -> &'a i32 {
-        in2 // example implementation
+    fn example5<'a>(in1: &'a i32, in2: &'a i32) -> &'a i32 {
+        in1 // example implementation
     }
     // This is easier to reason about, but limits what can be passed into the function. The previous 
     // code example would produce a compile error, as the lifetime of a and b are different.
@@ -138,7 +138,7 @@ fn the_static_lifetime() {
     // immutable and must be able to be constructed at compile time. In this case that means T::new() must be a const function.
 
     // You might be tempted to say that any variable defined in main() has a static lifetime after it’s declared, right? Not so fast! 
-    // If a program panics, then the stack will be unwound, which can cause variables in main to be deallocated. Similarly, multithreaded 
-    // programs can run into similar issues, where one thread may have a reference to some other thread’s data, but if the thread with the 
+    // Multithreaded programs can have one thread with a reference to some other thread’s data, but if the thread with the 
     // data panics or ends then the data goes too.
+    // Alternatively, if a program panics then memory is cleaned up, which can cause variables in main to be deallocated before the program ends.
 }

@@ -26,11 +26,14 @@ fn for_loop() {
     for item in arr {
         println!("{item}");
     }
+    println!();
 
     // Ranges can be used to emulate standard for loops
     for n in 0..10 { // Prints 0 to 9
         println!("{n}");
     }
+    println!();
+
     for n in 0..=10 { // Prints 0 to 10
         println!("{n}");
     }
@@ -46,6 +49,7 @@ fn ownership_and_iterators() {
     for item in vec { // 'item' is an i32, it has been moved out of vec.
         println!("{item}");
     }
+    println!();
 
     //vec[0]; // Compile error! Use of moved value. All the values have been moved out of the vec.
 
@@ -57,6 +61,7 @@ fn ownership_and_iterators() {
         println!("{item}");
     }
     vec2[0]; // ok!
+    println!();
 
     let mut vec3 = vec![1,2,3];
     for item in vec3.iter_mut() { // 'item' is now a &mut i32.
@@ -68,7 +73,7 @@ fn ownership_and_iterators() {
 fn while_loop() {
     let mut n = 0;
     while n < 10 {
-        println!("Hello!");
+        println!("n is {n}");
         n += 1;
     }
 }
@@ -76,14 +81,15 @@ fn while_loop() {
 fn breaking() {
     // A loop can be broken out of with the break keyword, similar to other languages. 
     for i in 0..10 {
-        if i == 9 {
+        println!("i is {i}");
+        if i == 5 {
             break;
         }
     }
+    println!("done!");
 }
 
 fn nested_break() {
-    
     // Rust also supports naming loops to break out of nested loops:
     let mut x = 0;
     'outer: loop {
@@ -94,4 +100,5 @@ fn nested_break() {
             }
         x += 1;
     }
+    println!("x is {x}");
 }

@@ -4,10 +4,11 @@
 fn main() {
     // simple_trait();
     // supertrait();
+    // associated_types();
 }
 
 // Rust does not support inheritance in the standard way to avoid the complexity and fragility it introduces. 
-// Inheritance tightly couples types and can cause issues with shared mutable state, implicit behavior, and deep class hierarchies. 
+// Inheritance on objects tightly couples types and can cause issues with shared mutable state, implicit behavior, and deep class hierarchies. 
 // Rust instead favours composition (structs containing other types) and traits (interfaces defining shared behavior). 
 // This gives code reuse and polymorphism without hidden relationships, making programs safer, clearer, and easier to maintain.
 
@@ -57,5 +58,32 @@ impl Print for Point {}
 
 fn supertrait() {
     let p = Point {x: 10, y: 20};
-    p.print()
+    p.print();
+}
+
+
+
+// Traits can also make reference to 'associated types' that the implementer can specify.
+// For example, here we define a trait that allows for overflow-free multiplication by 
+// returning a different type that is large enough to store all possible values:
+// e.g. multiplying two 16-bit values and returning a 32-bit value. 
+trait WideMultiply {
+    type Wide; // The implementer specifies what type 'Wide' is.
+
+    //                            vvvv - This is the type of whatever implements the trait
+    fn wide_multiply(self, other: Self) -> Self::Wide;
+    //                                    ^^^^^^^^^^ - This refers to the associated type specified above
+}
+
+impl WideMultiply for i16 {
+    type Wide = i32;
+    
+    fn wide_multiply(self, other: Self) -> Self::Wide {
+        (self as i32) * (other as i32)
+    }
+}
+
+fn associated_types() {
+    let a: i32 = 10.wide_multiply(20);
+    println!()
 }

@@ -1,21 +1,22 @@
 #![allow(dead_code, unused_variables, unused_assignments, clippy::needless_return)]
 
 fn main() {
-    example1();
-    example2();
-    example3();
+    simple_macro();
+    multi_body_macro();
+    variadic_macro();
 }
 
 // Rust macros are similar to the C preprocessor (with the added bonus of type checking), 
 // it can be used to generate code snippets at compile time. 
 // The syntax for macros is pretty atrocious. Here is an example macro that takes no arguments:
 macro_rules! say_hello {
-	() => { // <-- Parameters defined here. We take no parameters.
+//  vv - Parameters defined here. We take no parameters.
+	() => {
     	println!("Hello!");
 	};
 }
 
-fn example1() {
+fn simple_macro() {
     // To use it:
     say_hello!(); // Prints "Hello!"
 }
@@ -28,7 +29,7 @@ trait BackwardsAdd {
 }
 // And an example of how we might implement this manually...
 impl BackwardsAdd for u64 {
-	type T = u8;
+	type T = u64;
 	fn backwards_add(a: Self::T, b: Self::T) -> Self::T {
 	    b+a
     }
@@ -71,7 +72,7 @@ macro_rules! say_hello {
 	};
 }
 
-fn example2() {
+fn multi_body_macro() {
     say_hello!(); // Prints "Hello!"
     let i = 10;
     say_hello!(i); // Prints "Variable: 10"
@@ -85,7 +86,7 @@ macro_rules! print_all {
         )*
     };
 }
-fn example3() {
+fn variadic_macro() {
     print_all!("Hi");
     println!();
 
