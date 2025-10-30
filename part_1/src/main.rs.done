@@ -1,0 +1,100 @@
+fn main() {
+    println!("Hello, world!");
+    println!("To run one of the example projects, use `cargo run --example example_name_here`");
+    println!();
+    println!("Once you've looked at all of the examples for this part, come back and have a go at this first project.");
+
+    text_adventure_inventory_manager();
+}
+
+// Note: This isn't a perfect implementation, it can definitely be done better but I'm limiting myself to what's been taught thus far.
+fn text_adventure_inventory_manager() {
+    println!("Time to begin your adventure! Your inventory consists of a number of potions, tools, and weapons");
+    println!("Type commands to add or remove potions, tools or weapons; list your current inventory, or quit.");
+    println!("Commands: 'add [potion, tool, weapon]', 'remove [potion, tool, weapon]', 'list', 'quit'");
+
+    let mut inventory = Inventory {num_potions: 0, num_tools: 0, num_weapons: 0};
+
+    loop {
+        ready_for_input();
+        let line = get_line();
+        let cmd = interpret_string(line);
+        match cmd {
+            Command::Add(ItemType::Potion) => inventory.num_potions += 1,
+            Command::Add(ItemType::Weapon) => inventory.num_weapons += 1,
+            Command::Add(ItemType::Tool)   => inventory.num_tools   += 1,
+
+            Command::Remove(ItemType::Potion) => inventory.num_potions -= 1,
+            Command::Remove(ItemType::Weapon) => inventory.num_weapons -= 1,
+            Command::Remove(ItemType::Tool)   => inventory.num_tools   -= 1,
+
+            Command::List => println!("{inventory:?}"),
+            Command::Quit => break,
+        };
+    }
+
+    println!("Bye!");
+}
+
+/// Place a '> ' at the start of the current line so the user knows they can type a command
+fn ready_for_input() {
+    print!("> ");
+    use std::io::Write;
+    let _ = std::io::stdout().flush();
+}
+
+/// Get a line of text from the terminal, separated into words
+fn get_line() -> Vec<String> {
+    let mut buffer = String::new();
+    std::io::stdin().read_line(&mut buffer).unwrap();
+    buffer.split_whitespace().map(|str| str.to_string()).collect()
+}
+
+/// Interpret a line of text as a Command
+fn interpret_string(line: Vec<String>) -> Command {
+    let first_word = &line[0];
+
+    match first_word.as_str() {
+        "add" => {
+            let item_type = parse_item_type(&line[1]);
+            Command::Add(item_type)
+        },
+        "remove" => {
+            let item_type = parse_item_type(&line[1]);
+            Command::Remove(item_type)
+        },
+        "list" => Command::List,
+        "quit" => Command::Quit,
+        _ => panic!("Unknown command! '{first_word}'")
+    }
+}
+
+/// Interpret text as an ItemType
+fn parse_item_type(item_string: &str) -> ItemType {
+    match item_string {
+        "potion" => ItemType::Potion,
+        "weapon" => ItemType::Weapon,
+        "tool" => ItemType::Tool,
+        _ => panic!("Unknown item type! '{item_string}'"),
+    }
+}
+
+#[derive(Debug)] // Lets us print an Inventory struct using 'println!("{:?}")'
+struct Inventory {
+    num_potions: u32,
+    num_weapons: u32,
+    num_tools: u32,
+}
+
+enum ItemType {
+    Weapon,
+    Potion,
+    Tool,
+}
+
+enum Command {
+    Add(ItemType),
+    Remove(ItemType),
+    List,
+    Quit
+}

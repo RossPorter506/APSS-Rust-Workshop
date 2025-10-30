@@ -1,0 +1,71 @@
+use std::convert::Infallible;
+
+use bigdecimal::BigDecimal;
+
+pub trait Transaction {
+    type Err;
+    fn apply(self, balance: &mut BigDecimal) -> Result<(), Self::Err>;
+}
+
+/// Deposit into an account
+pub struct Deposit {
+    amount: BigDecimal,
+}
+impl Deposit {
+    pub fn cash(value: i32) -> Self {
+        Self { amount: value.into() }
+    }
+}
+impl Transaction for Deposit {
+    type Err = Infallible; // We never return the error variant
+
+    fn apply(self, balance: &mut BigDecimal) -> Result<(), Self::Err> {
+        *balance += self.amount;
+        Ok(())
+    }
+}
+
+/// Pay a flat fee to the bank
+pub struct PayFlatFee {
+    fee: BigDecimal,
+}
+impl PayFlatFee {
+    pub fn amount(value: i32) -> Self {
+        Self {fee: value.into()}
+    }
+}
+impl Transaction for PayFlatFee {
+    type Err = TransactionError;
+
+    fn apply(self, balance: &mut BigDecimal) -> Result<(), Self::Err> {
+        if *balance < self.fee {
+            return Err(Self::Err::InsufficientFunds);
+        } 
+        *balance -= self.fee;
+        Ok(())
+    }
+}
+
+/// Pay percentage interest into the account
+pub struct AccrueInterest {
+    percentage: u8,
+}
+impl AccrueInterest {
+    pub fn percentage(percentage: u8) -> Self {
+        Self {percentage}
+    }
+}
+impl Transaction for AccrueInterest {
+    type Err = Infallible;
+
+    fn apply(self, balance: &mut BigDecimal) -> Result<(), Self::Err> {
+        *balance += &*balance * self.percentage;
+        Ok(())
+    }
+}
+
+// Possible ways a transaction can fail
+#[derive(Debug)]
+pub enum TransactionError {
+    InsufficientFunds,
+}

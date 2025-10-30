@@ -1,0 +1,47 @@
+use std::marker::PhantomData;
+
+use bigdecimal::BigDecimal;
+
+use crate::transaction::Transaction;
+
+pub struct Frozen;
+pub struct Active;
+
+pub struct BankAccount<S> {
+    balance: BigDecimal,
+    _state: PhantomData<S>,
+}
+
+// Methods for active bank accounts only
+impl BankAccount<Active> {
+    // Constructors
+    pub fn new(initial: i32) -> Self {
+        BankAccount { balance: initial.into(), _state: PhantomData }
+    }
+    pub fn default() -> Self {
+        Self::new(0)
+    }
+
+    pub fn apply<E>(&mut self, transaction: impl Transaction<Err = E>) -> Result<(), E> {
+        transaction.apply(&mut self.balance)
+    }
+
+    // Consuming methods
+    pub fn freeze(self) -> BankAccount<Frozen> {
+        BankAccount { balance: self.balance, _state: PhantomData }
+    }
+}
+
+// Methods implemented for all possible states
+impl<S> BankAccount<S> {
+    pub fn balance(&self) -> BigDecimal {
+        self.balance.clone()
+    }
+}
+
+// Methods for frozen bank accounts only
+impl BankAccount<Frozen> {
+    pub fn unfreeze(self) -> BankAccount<Active> {
+        BankAccount { balance: self.balance, _state: PhantomData }
+    }
+}
