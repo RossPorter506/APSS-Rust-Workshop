@@ -19,18 +19,27 @@ fn methods() {
     let ten = i32::isqrt(100);
     println!("{ten}");
 
-    // Look at the function signature of isqrt() above: 
+    // What would the function signature of this look like? We could write it as:
+    //                        vvv - Returns an i32
+    // fn isqrt(self: i32) -> i32
+    //          ^^^^^^^^^ - Takes an i32
+
+    // Because methods almost always take an instance of the type as a parameter, Rust has
+    // shorthand for this: If we name the first parameter 'self' the type is assumed to be the same type
+    // the method is a defined on (in this case, i32). 
+    // Likewise, if we want to refer to the type that the method is defined on, we can use 'Self' (instead 
+    // of 'i32'). So we could just as well write the function signature as:
     //                       vvvv - The parent type itself, 'i32' in this case.
     // pub fn isqrt(self) -> Self
-    //              ^^^^ - A value of type Self, '100' in this case.
-    // So the above function takes a value of type i32, and the return type is an i32.
+    //              ^^^^ - A value of type Self (i.e. i32), '100' in this case.
+    // And indeed, if you mouse over isqrt() this is very similar to the actual definition!
 
-    // Since most methods take an instance of the parent type it gets a bit boring constantly having to spell 
-    // out the type name all the time.
-    // Instead, Rust provides some shorthand through the 'dot' syntax (you might be familiar with from other languages):
+    
+    // Another shorthand available is the 'dot' syntax (you might be familiar with from other languages), 
+    // which just passes the dotted value as the first argument. This also removes the need to specify 
+    // the type the method is defined on:
     let also_ten = 100_i32.isqrt();
     println!("{also_ten}");
-    // The dot syntax is really just shorthand for passing the 'dotted' variable as the first parameter.
 
     // If a method doesn't require an instance of the parent type we call it a 'static' method. 
     // If it does, we call it an 'instance' or 'non-static' method.
