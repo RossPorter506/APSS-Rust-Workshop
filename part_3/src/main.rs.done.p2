@@ -1,0 +1,157 @@
+// Matching on string slices in const contexts isn't stabilised yet
+#![feature(const_cmp, const_trait_impl)]
+
+use std::fmt::Display;
+
+fn main() {
+    println!("Hello, world!");
+    println!("Once you've looked at the examples in this section, try to fill out the following project.");
+
+    cpu_emulator();
+}
+
+// Part 1:
+// Design an emulated CPU that can do the following instructions:
+// STORE - store a value into a register
+// INCRM - increment the value stored in a register
+// PRNTR - print a register's value
+// The list of instructions should be checked at compile time for correctness using const fn's
+//
+// Part 2:
+// Add a PRNTS instruction to print an arbitrary string
+// Use a macro to reduce the boilerplate around adding instructions
+
+// $cmd:expr means it accepts an expression we call 'cmd'
+// The $() means the input is repeated. The comma after the $() means the values are comma separated,
+// and the * on the end means this section can be repeated zero or more times.
+// To allow for a trailing comma, we add $(,)? on the end. The trailing '?' means this bit appears zero or one time.
+macro_rules! instructions {
+    ( $($cmd:expr),* $(,)? ) => {
+        &[
+            $(parse_instruction(&$cmd)),*
+        ]
+    };
+}
+
+fn cpu_emulator() {
+    const INSTRUCTIONS: &[Instruction] = instructions!(
+        ["STORE", "255", "r1"],
+        ["PRNTR", "r1"],
+        ["INCRM", "r1"],
+        ["PRNTS", "Hello world!"],
+    );
+
+    let mut cpu = Cpu::default();
+    println!("Before: {cpu:?}");
+    cpu.run(INSTRUCTIONS);
+    println!("After: {cpu:?}");
+}
+
+#[derive(Debug, Default)]
+struct Cpu {
+    register_file: [u8; 3]
+}
+impl Cpu {
+    fn run(&mut self, instrs: &[Instruction]) {
+        for instr in instrs {
+            match instr {
+                Instruction::Store(val, register) => {
+                    self.register_file[register] = *val;
+                },
+                Instruction::PrintReg(register) => {
+                    println!("Register {register}: {}", self.register_file[register])
+                },
+                Instruction::PrintStr(str) => {
+                    println!("String: {str}")
+                },
+                Instruction::Increment(register) => {
+                    self.register_file[register] = self.register_file[register].wrapping_add(1);
+                },
+            }
+        }
+    }
+}
+
+// Implementing these two traits lets us directly index slices using our custom Register type
+impl std::ops::Index<&Register> for [u8] {
+    type Output = u8;
+    fn index(&self, index: &Register) -> &Self::Output {
+        &self[*index as usize]
+    }
+}
+impl std::ops::IndexMut<&Register> for [u8] {
+    fn index_mut(&mut self, index: &Register) -> &mut Self::Output {
+        &mut self[*index as usize]
+    }
+}
+
+const fn parse_3digit(str_num: &str) -> u8 {
+    assert!(str_num.is_ascii() && !str_num.is_empty(), "Number should be non-empty ASCII");
+    let str_num = str_num.as_bytes();
+    let mut len = str_num.len();
+    let mut num = 0;
+    let mut i = 0;
+    while len != 0 {
+        num = num*10 + (str_num[i] - b'0');
+        len -= 1;
+        i += 1;
+    }
+    num
+}
+
+const fn parse_register(reg_str: &str) -> Register {
+    match reg_str {
+        "r0" => Register::R0,
+        "r1" => Register::R1,
+        "r2" => Register::R2,
+        _ => panic!("Invalid Register"),
+    }
+}
+
+const fn parse_instruction<'a>(instruction: &'a[&str]) -> Instruction<'a> {
+    match instruction[0] {
+        "STORE" => {
+            assert!(instruction.len() == 3, "STORE should have two arguments");
+            Instruction::Store(parse_3digit(instruction[1]), parse_register(instruction[2]))
+        },
+        "PRNTR" => {
+            assert!(instruction.len() == 2, "PRNTR should have one argument");
+            Instruction::PrintReg(parse_register(instruction[1]))
+        },
+        "PRNTS" => {
+            assert!(instruction.len() == 2, "PRNTS should have one argument");
+            Instruction::PrintStr(instruction[1])
+        },
+        "INCRM" => {
+            assert!(instruction.len() == 2, "INCRM should have one argument");
+            Instruction::Increment(parse_register(instruction[1]))
+        },
+        _ => panic!("Unrecognised command")
+    }
+}
+
+#[derive(Debug, Copy, Clone)]
+enum Register {
+    R0 = 0,
+    R1 = 1,
+    R2 = 2,
+}
+impl Display for Register {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let str = match self {
+            Register::R0 => "R0",
+            Register::R1 => "R1",
+            Register::R2 => "R2",
+        };
+        write!(f, "{str}")
+    }
+}
+
+type Value = u8;
+
+enum Instruction<'a> {
+    Store(Value, Register),
+    PrintReg(Register),
+    PrintStr(&'a str),
+    Increment(Register),
+}
