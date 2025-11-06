@@ -38,6 +38,7 @@ fn main() -> ! {
 	// Unfortunately the compiler complains if we don't 'use' the Result here. The easiest way to 'use' it is to convert the 
 	// Result to an Option with .ok();
 	
+    // You might want to look at the documentation for the HAL: cargo doc --open --package msp430fr2x5x-hal
 
 	// Now this is pretty cool! But can we go further?
 

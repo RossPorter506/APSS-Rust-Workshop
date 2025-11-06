@@ -1,23 +1,21 @@
-# `msp430fr2355-quickstart`
+# Embedded Rust MSP430 Intro
 
-This is a template repository for developing applications for the MSP430FR2355 using Rust, it contains everything you need to start developing an application.
 
-This repository contains an empty `main.rs` project, and a few exmaples using the `msp430fr2355` Peripheral Access Crate (PAC) as a low-level interface. A higher-level interface can be provided through the `msp430fr2x5x-hal` Hardware Abstraction Layer (HAL). 
-HAL examples can be found in the [`msp430fr2x5x-hal` repository](https://github.com/YuhanLiin/msp430fr2x5x-hal)
+
+More HAL examples can be found in the [`msp430fr2x5x-hal` repository](https://github.com/YuhanLiin/msp430fr2x5x-hal).
 
 # Dependencies
 
 To build the binary [`msp430-gcc`](https://www.ti.com/tool/MSP430-GCC-OPENSOURCE) should be available on your PATH.
 
-To flash the binary [`mspdebug`](https://dlbeer.co.nz/mspdebug/) should be available on your PATH.
+To flash the binary on non-Windows systems [`mspdebug`](https://dlbeer.co.nz/mspdebug/) should be available on your PATH.
+On non-Windows systems you should edit the 'runner' line in .cargo/config.toml to point to run.sh instead.
 
 # Usage
 
 Compile the empty project in `src/main.rs` using `cargo build`, or one of the examples with `cargo build --example <example_name_here>`. 
 
 To flash the program to your device use `cargo run` or `cargo run --example <example_name_here>`.
-
-To debug using `gdb` first start the debug server with `./debug.sh`, then in a separate terminal run `msp430-elf-gdb ./target/msp430-none-elf/debug/msp430fr2355-quickstart` (or wherever your binary is)
 
 ### An aside - What are all these crates?
 
@@ -52,9 +50,3 @@ Licensed under either of
 - MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
 
 at your option.
-
-## Contribution
-
-Unless you explicitly state otherwise, any contribution intentionally submitted
-for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
-dual licensed as above, without any additional terms or conditions.
