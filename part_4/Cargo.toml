@@ -1,6 +1,27 @@
 [package]
-name = "part_4"
-version = "0.1.0"
-edition = "2024"
+authors = ["Yuhan Lin <linyuhan0315@hotmail.com>"]
+name = "msp430fr2355-quickstart"
+version = "0.2.0"
+edition = "2018"
 
 [dependencies]
+panic-msp430 = "0.4.0"
+msp430 = {version = "0.4.1", features = ["critical-section-single-core"]}
+msp430-rt = "0.4.0"
+msp430fr2355 = {version = "0.5.2", features = ["rt", "critical-section"]}
+critical-section = "1.2.0"
+msp430-atomic = "0.1.5"
+
+msp430fr2x5x-hal = "0.5"
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+opt-level = "z"
+
+[profile.dev]
+opt-level = "s"
+debug = true
+
+[profile.dev.package."*"]
+opt-level = "z"

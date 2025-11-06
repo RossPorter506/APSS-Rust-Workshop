@@ -6,3 +6,5 @@ edition = "2024"
 [dependencies]
 # For example 20
 num = "0.4"
+
+bigdecimal = "*"
