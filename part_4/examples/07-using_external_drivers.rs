@@ -25,8 +25,8 @@ use msp430fr2x5x_hal::{
 // about what MCU you're using! 
 
 // For example, there is an `I2c` trait in embedded_hal that defines something capable of I2C communication.
-// External driver libraries (like the BMP390 crate) can use this trait without having to worry about how it's implemented, and 
-// HAL users can seamlessly use these libraries without needing to implement I2C themselves!
+// External driver libraries (like the BMP390 crate) can use this trait without having to worry about how it's implemented, 
+// and HAL users can seamlessly use these libraries without needing to implement I2C themselves!
 
 #[entry]
 fn main() -> ! {

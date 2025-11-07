@@ -22,12 +22,13 @@ use msp430fr2x5x_hal::{
 
 #[entry]
 fn main() -> ! {
-	// The highest level of abstraction is the Board Support Package (BSP). This is designed for a specific board as opposed to 
-    // a microcontroller. Since we're using an MSP dev board there isn't much on this particular PCB, so you might want to look at other
-    // examples, like the APSS-2 self-test repository, or the OpenDataloggingThermometer repo here: 
+	// The highest level of abstraction is the Board Support Package (BSP). This is designed for a specific 
+    // board as opposed to a microcontroller. Since we're using an MSP dev board there isn't much on this 
+    // particular PCB, so you might want to look at other examples, like the APSS-2 self-test repository, or the 
+    // OpenDataloggingThermometer repo here: 
     // https://github.com/RossPorter506/OpenDataLoggerThermometer/blob/main/software/open_dl_thermometer_rs/src/board.rs
-    // Generally speaking, a BSP will do all the configuration for you, leaving you with some high-level object that controls everything.
-    // We'll make a simple example below:
+    // Generally speaking, a BSP will do all the configuration for you, leaving you with some high-level 
+    // object that controls everything. We'll make a simple example below:
 
     let mut board = Board::configure();
 
@@ -49,12 +50,13 @@ impl Board {
         Wdt::constrain(regs.WDT_A); // Disable watchdog timer
 
         // Configure the clock system so we can get accurate delay timing
-        let mut fram = Fram::new(regs.FRCTL); // Note: Remember we had to set FRAM wait states based on clock speed? The HAL won't let you forget...
+        let mut fram = Fram::new(regs.FRCTL); // Note: Remember we had to set FRAM wait states based on clock speed? 
+                                              // The HAL won't let you forget...
         let (_aclk, delay) = ClockConfig::new(regs.CS)
             .mclk_dcoclk(DcoclkFreqSel::_1MHz, MclkDiv::_1)
             .aclk_refoclk()
             .smclk_off()
-            .freeze(&mut fram);// <-- ...because the clock system will mutably borrow it to make sure it's correctly configured
+            .freeze(&mut fram);// <-- ...because the clock system will mutably borrow it to configure that for you.
 
         let pmm = Pmm::new(regs.PMM);
 

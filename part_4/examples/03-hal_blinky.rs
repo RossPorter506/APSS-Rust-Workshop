@@ -35,9 +35,9 @@ fn main() -> ! {
 
 	// Toggle the pin.
 	led.toggle().ok();
-	// Note: The HAL implements an embedded_hal trait which returns a Result, but for the MSP430 implementation this operation never fails.
-	// Unfortunately the compiler complains if we don't 'use' the Result here. The easiest way to 'use' it is to convert the 
-	// Result to an Option with .ok();
+	// Note: The HAL implements an embedded_hal trait which returns a Result, but 
+	// for the MSP430 implementation this operation never fails. Unfortunately the compiler complains if
+	// we don't 'use' the Result here. The easiest way to 'use' it is to convert the Result to an Option with .ok();
 	
     // You might want to look at the documentation for the HAL: cargo doc --open --package msp430fr2x5x-hal
 
