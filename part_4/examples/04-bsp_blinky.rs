@@ -1,6 +1,7 @@
 #![no_main]
 #![no_std]
-#![allow(dead_code)]
+#![allow(dead_code, clippy::empty_loop)]
+
 use panic_msp430 as _;
 
 use msp430_rt::entry;

@@ -1,7 +1,8 @@
 #![no_main]
 #![no_std]
-#![allow(dead_code)]
-#![feature(abi_msp430_interrupt)]
+#![allow(clippy::empty_loop)]
+#![feature(abi_msp430_interrupt)] // When using interrupts you must include this line
+
 use msp430::interrupt::enable as enable_interrupts;
 use msp430_atomic::AtomicU16;
 use panic_msp430 as _;

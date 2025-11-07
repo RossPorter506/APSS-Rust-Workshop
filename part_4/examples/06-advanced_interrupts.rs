@@ -1,7 +1,8 @@
 #![no_main]
 #![no_std]
-#![allow(dead_code)]
+#![allow(clippy::empty_loop)]
 #![feature(abi_msp430_interrupt)]
+
 use core::cell::RefCell;
 
 use critical_section::{Mutex, with as critical_section};

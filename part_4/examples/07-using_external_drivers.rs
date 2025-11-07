@@ -1,6 +1,6 @@
 #![no_main]
 #![no_std]
-#![allow(dead_code)]
+#![allow(clippy::empty_loop)]
 #![feature(abi_msp430_interrupt)]
 
 use bmp390::sync::Bmp390;

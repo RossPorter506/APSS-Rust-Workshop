@@ -2,6 +2,7 @@
 // and we have to manually mark the start of the program
 #![no_main]
 #![no_std]
+#![allow(clippy::empty_loop)]
 
 // We have to include these to make sure they get linked into the program. 
 //  vvvvvvvvvvvv This our 'Peripheral Access Crate'. More on this later.

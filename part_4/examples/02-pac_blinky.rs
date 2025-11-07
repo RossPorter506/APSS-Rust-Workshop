@@ -1,5 +1,6 @@
 #![no_main]
 #![no_std]
+#![allow(clippy::empty_loop)]
 
 use msp430fr2355 as _;
 use panic_msp430 as _;
