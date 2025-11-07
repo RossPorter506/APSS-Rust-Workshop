@@ -31,17 +31,18 @@ fn main() -> ! {
 	// The following methods are usually available on MSP430 registers:
 
 	// The MSP430 has instructions for setting or clearing bits in a register without affecting the other bits:
-	// set_bits() - sets the individual bits that are set in the closure. This is done as a single atomic operation.
-	// clear_bits() - clears the individual bits that are cleared in the closure. This is done as a single atomic operation.
+	// set_bits() - sets the individual bits that are set in the closure, leaving the rest unchanged. This is done as a single atomic operation.
+	// clear_bits() - clears the individual bits that are cleared in the closure, leaving the rest unchanged. This is done as a single atomic operation.
 	// read() - reads from the register in a single atomic operation.
 
 	// reset() - writes the reset value as specified in the datasheet to the register in a single atomic operation.
 	// write() - starting from the reset value, apply the changes in the closure then write this to the register in a single atomic operation.
 
 	// modify() - Reads the current register value, performs the modifications in the closure, 
-	// then writes the new value back. This is equivalent to `REG &= ~bits` or `REG |= bits` in C.
+	// then writes the new value back. This is equivalent to `REG = REG & ~bits` or `REG = REG | bits` in C.
 
-	// The bits() method is always available, but registers with separate bitfields can have each bitfield set separately.
+	// The bits() method is always available which reads / writes all the bits in the register, 
+    // but registers with separate bitfields can have each bitfield set separately.
 
 	// Toggle the last bit of P1OUT:
 	regs.P1.p1out.modify(|r, w| unsafe { w.bits(r.bits() ^ 1) });
