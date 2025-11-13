@@ -20,6 +20,8 @@ fn main() -> ! {
 	// a HAL is hand-written to make common operations streamlined and to reduce the chances of you doing things wrong. 
 	// As a result they can be more opinionated and may not cover all use cases.
 
+	// (Pay attention! A HAL is the usual level of abstraction used by most embedded programs)
+
 	let regs = pac::Peripherals::take().unwrap();
 
 	// In order to prevent you from forgetting to clear the LOCKLPM5 bit, the HAL requires you to configure the PMM register first...

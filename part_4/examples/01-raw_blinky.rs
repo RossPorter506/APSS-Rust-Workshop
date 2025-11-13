@@ -10,9 +10,9 @@ use msp430_rt::entry;
 #[entry]
 fn main() -> ! {
 	// Welcome to the lowest possible level of embedded Rust: Manual bit twiddling
+	// (Usually you operate at a much higher level of abstraction, this example is just for your own understanding)
 
 	// If we want to blink an LED, we need to:
-
 	// 1. Set P1.0 as an output.
 	// 2. Toggle P1.0.
 	// 3. Clear the LOCKLPM5 bit from the PMM5CTL0 register.

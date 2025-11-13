@@ -30,6 +30,8 @@ fn main() -> ! {
     // Generally speaking, a BSP will do all the configuration for you, leaving you with some high-level 
     // object that controls everything. We'll make a simple example below:
 
+    // (You will likely end up making something like a BSP for your projects.)
+
     let mut board = Board::configure();
 
     loop {
@@ -50,7 +52,7 @@ impl Board {
         Wdt::constrain(regs.WDT_A); // Disable watchdog timer
 
         // Configure the clock system so we can get accurate delay timing
-        let mut fram = Fram::new(regs.FRCTL); // Note: Remember we had to set FRAM wait states based on clock speed? 
+        let mut fram = Fram::new(regs.FRCTL); // Note: Remember we had to set FRAM wait states when setting clock speed? 
                                               // The HAL won't let you forget...
         let (_aclk, delay) = ClockConfig::new(regs.CS)
             .mclk_dcoclk(DcoclkFreqSel::_1MHz, MclkDiv::_1)

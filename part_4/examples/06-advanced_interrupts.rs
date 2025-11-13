@@ -90,7 +90,7 @@ fn PORT2() {
         let Some(ref mut p2iv) = *P2IV.borrow_ref_mut(cs) else { unreachable!() };
         
 
-        // Reading the GPIO interrupt vector clears the interrupt flag, and also tells us which pin cause the interrupt.
+        // Reading the GPIO interrupt vector clears the interrupt flag, and also tells us which pin caused the interrupt.
         if let GpioVector::Pin3Isr = p2iv.get_interrupt_vector() {
             red_led.toggle().ok();
         }
