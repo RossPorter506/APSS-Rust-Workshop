@@ -4,7 +4,7 @@ fn main() {
     println!();
     println!("Once you've looked at all of the examples for this part, come back and have a go at this first project.");
 
-    text_adventure_inventory_manager();
+    // text_adventure_inventory_manager();
 }
 
 // Try to implement this. There is a working example in 'main.rs.done'.

@@ -20,10 +20,10 @@ fn main() {
 // Use a macro to reduce the boilerplate around adding instructions
 fn cpu_emulator() {
     const INSTRUCTIONS: &[Instruction] = &[
-        parse_instruction(&["STORE", "255", "r1"]), 
-        parse_instruction(&["PRINT", "r1"]),
-        parse_instruction(&["INCRM", "r1"]),
-        parse_instruction(&["PRINT", "r1"]),
+        // parse_instruction(&["STORE", "255", "r1"]), 
+        // parse_instruction(&["PRINT", "r1"]),
+        // parse_instruction(&["INCRM", "r1"]),
+        // parse_instruction(&["PRINT", "r1"]),
     ];
 
     let mut cpu = Cpu::default();
