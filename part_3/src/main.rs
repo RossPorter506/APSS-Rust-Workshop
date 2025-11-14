@@ -16,7 +16,7 @@ fn main() {
 // The list of instructions should be checked at compile time for correctness using const fn's
 //
 // Part 2:
-// Add a PRNTS instruction to print an arbitrary string
+// Add a PRNTS instruction to print an arbitrary string slice (&str)
 // Use a macro to reduce the boilerplate around adding instructions
 fn cpu_emulator() {
     const INSTRUCTIONS: &[Instruction] = &[
