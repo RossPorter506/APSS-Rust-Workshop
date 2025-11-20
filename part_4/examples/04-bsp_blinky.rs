@@ -80,12 +80,12 @@ impl<PORT: PortNum, PIN: PinNum> Led<PORT, PIN> {
         Self { pin }
     }
     fn turn_on(&mut self) {
-        self.pin.set_high().ok();
+        self.pin.set_high();
     }
     fn turn_off(&mut self) {
-        self.pin.set_low().ok();
+        self.pin.set_low();
     }
     fn toggle(&mut self) {
-        self.pin.toggle().ok();
+        self.pin.toggle();
     }
 }

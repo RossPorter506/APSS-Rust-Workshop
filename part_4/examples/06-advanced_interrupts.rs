@@ -92,7 +92,7 @@ fn PORT2() {
 
         // Reading the GPIO interrupt vector clears the interrupt flag, and also tells us which pin caused the interrupt.
         if let GpioVector::Pin3Isr = p2iv.get_interrupt_vector() {
-            red_led.toggle().ok();
+            red_led.toggle();
         }
     });
 }

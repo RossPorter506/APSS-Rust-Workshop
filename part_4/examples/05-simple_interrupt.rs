@@ -33,7 +33,7 @@ fn main() -> ! {
 
     loop {
         // Set LED high if COUNT is even, otherwise set low
-        led.set_state( COUNT.load().is_multiple_of(2).into() ).ok();
+        led.set_state( COUNT.load().is_multiple_of(2).into() );
     }
 }
 
